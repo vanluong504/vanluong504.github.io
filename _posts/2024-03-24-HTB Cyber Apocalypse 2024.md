@@ -1,5 +1,5 @@
 ---
-title: Hackthebox Cyber Apocalypse 2024
+title: Hackthebox Cyber Apocalypse 2024 - Writeup
 date: 2024-03-24 00:00:00
 categories: [CTF]
 tags: [CTF,HTB Cyber Apocalypse 2024]
