@@ -50,7 +50,7 @@ $$S = \lbrace (x, y) : y^{2} = x^3 + ax + bx + c \rbrace \cup \lbrace 0 \rbrace$
 Dễ dàng thấy một đường cong như vậy có thể có nhiều nhất là $2p+1$ điểm trong $F_p$, nghĩa là điểm vô cùng với $2q$ cặp (x, y) trong đó $x, y \ \in F_q$, tức là mỗi q giá trị x có thể tồn tại nhiều nhất 2 giá trị y thỏa mãn $Y^2 = X^3 + aX + b$. Nhưng vì chỉ có một nửa các phần của $F_q^*$ có căn bậc 2 người ta kì vọng chỉ có khoảng một nửa số các điểm của $F_q$
 
 
-Ví dụ : Nếu $q = p$ là 1 số nguyên tố thì $λ(x) = (x / p)$ là kí hiệu Legedre Symbol. Do đó trong tất cả mọi trường hợp số các nghiệm $y \in F_q$ thảo mãn phương trình $y^2=u$ là bằng $1+ λ(u)$. Vì vậy số các nghiệm ở phương trình 1 và điểm vô hạn là: ![image](https://github.com/luongdv35/Elliptic-Curves-in-Cryptography/assets/127461439/697769ca-5a38-4478-b4a5-1bfdc12ac924)
+Ví dụ : Nếu $q = p$ là 1 số nguyên tố thì $λ(x) = (x / p)$ là kí hiệu Legedre Symbol. Do đó trong tất cả mọi trường hợp số các nghiệm $y \in F_q$ thảo mãn phương trình $y^2=u$ là bằng $1+ λ(u)$. Vì vậy số các nghiệm ở phương trình 1 và điểm vô hạn là: 
 
 
 Giả sử $λ(x^3 + ax + b) = +-1$
