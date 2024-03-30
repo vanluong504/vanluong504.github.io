@@ -76,7 +76,7 @@ RSA còn sử dụng để tạo chữ kí số, xác thực Certificate HTTPS.
 Nếu n nhỏ (chiều dài n < 256 bit), ta có thể dễ dàng factorize n bằng cách brute-force số p. Chiều dài n được khuyến cáo là 1024 bit.
 
 
-Kể cả khi n lớn, đôi khi factorize của n đã có sẵn trong các database online như [factordb](http://factordb.com/). Hoặc dễ dàng factorize bằng các công cụ online như [alpertron](https://www.alpertron.com/), trang web này sử dụng phương pháp Elliptic Curve Method để factorize. Vậy nên, việc đầu tiên bạn cần làm khi gặp các bài RSA là thử các trang web này trước.
+Kể cả khi n lớn, đôi khi factorize của n đã có sẵn trong các database online như **factordb**. Hoặc dễ dàng factorize bằng các công cụ online như [alpertron](https://www.alpertron.com/), trang web này sử dụng phương pháp Elliptic Curve Method để factorize. Vậy nên, việc đầu tiên bạn cần làm khi gặp các bài RSA là thử các trang web này trước.
 
 
 Code minh họa:
