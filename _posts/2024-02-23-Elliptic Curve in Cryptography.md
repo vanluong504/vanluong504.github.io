@@ -52,12 +52,13 @@ Dễ dàng thấy một đường cong như vậy có thể có nhiều nhất l
 
 Ví dụ : Nếu $q = p$ là 1 số nguyên tố thì $λ(x) = (x / p)$ là kí hiệu Legedre Symbol. Do đó trong tất cả mọi trường hợp số các nghiệm $y \in F_q$ thảo mãn phương trình $y^2=u$ là bằng $1+ λ(u)$. Vì vậy số các nghiệm ở phương trình 1 và điểm vô hạn là: 
 
+$$1 + \displaystyle\sum_{x \in Fq} (1 + \lambda (x^3 + ax + b)) = q + 1 + \displaystyle\sum_{x \in Fq} (1 + \lambda (x^3 + ax + b))$$
 
 Giả sử $λ(x^3 + ax + b) = +-1$
 
 Lấy tổng ngẫu nhiên ta thấy rằng $\displaystyle\sum_{x \in Fq} (x^3 + ax + b)$ bị chặn bở $2 \sqrt{q}$ đó chính là định lý Hasses được phát triển như sau
 
-Gọi **N** là số các điểm trên đường cong elliptic được định nghĩa trên trường $F_q$. Khi đó $|N-(q+1)| \ =< \ 2 \sqrt{q}$
+Gọi **N** là số các điểm trên đường cong elliptic được định nghĩa trên trường $F_q$, khi đó $|N-(q+1)| \le \ 2 \sqrt{q}$
 
 ### Các phép toán trên đường cong Elliptic
 
@@ -173,7 +174,8 @@ Dễ dàng nhận thấy $Q = iP + jmP$ hay $Q = (i + jm)P$ từ đó $k = i + j
 
 Phương pháp này cũng sử dụng kỹ thuật tìm kiếm liên tục để tìm logarit rời rạc. Độ phức tạp của phương pháp này phụ thuộc vào việc lựa chọn hàm băm
 
-Thuật toán pollard's rho dựa trên cơ sở  Floyd's cycle-finding algorithm và trên sự đánh giá rằng 2 số $x, y$ đồng dư modulo p với xác suất 0.5 sau khi chọn $1.177 \sqrt p$ số ngẫu nhiên. Nếu $p$ là nhân tử của $n$ thì $1 < gcd(|x-y|, n) <= n$ từ dó $p$ là ước số của $|x-y|$ và $n$
+
+Thuật toán pollard's rho dựa trên cơ sở  Floyd's cycle-finding algorithm và trên sự đánh giá rằng 2 số $x, y$ đồng dư modulo p với xác suất 0.5 sau khi chọn $1.177 \sqrt{p}$ số ngẫu nhiên. Nếu $p$ là nhân tử của $n$ thì $1 < gcd(|x-y|, n) <= n$ từ dó $p$ là ước số của $|x-y|$ và $n$
 
 Mã giả thuật toán
 
