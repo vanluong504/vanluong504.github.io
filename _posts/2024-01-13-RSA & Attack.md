@@ -81,7 +81,7 @@ Kể cả khi n lớn, đôi khi factorize của n đã có sẵn trong các dat
 
 Code minh họa:
 
-```python3
+```python
 from Crypto.Util.number import inverse, long_to_bytes
 from factordb.factordb import FactorDB
 
@@ -116,7 +116,7 @@ $$C = M ^ 3 (modN) = M^3 $$
 
 Code minh họa: 
 
-```python3
+```python
 from Crypto.Util.number import  * 
 import gmpy2
 # flag = b"KCSC{?????????}"
@@ -159,7 +159,7 @@ $$n = x^2 - y^2 = (x - y)(x + y)$$
 
 Code minh họa:
 
-```python3
+```python
 def isqrt(n):
     x = n
     y = (x + n // x) // 2
@@ -220,7 +220,7 @@ Ta có thể áp dụng [Chinese Remainder Theorem](https://en.wikipedia.org/wik
 
 Code minh họa:
 
-```python3
+```python
 from Crypto.Util.number import  * 
 import gmpy2
 
@@ -273,7 +273,7 @@ $\mid \frac{e}{n} - \frac{k}{d} \mid < \frac{1}{2d^2}$
 
 Code minh họa:
 
-```python3
+```python
 from Crypto.Util.number import * 
 import owiener
 N = 'b12746657c720a434861e9a4828b3c89a6b8d4a1bd921054e48d47124dbcc9cfcdcc39261c5e93817c167db818081613f57729e0039875c72a5ae1f0bc5ef7c933880c2ad528adbc9b1430003a491e460917b34c4590977df47772fab1ee0ab251f94065ab3004893fe1b2958008848b0124f22c4e75f60ed3889fb62e5ef4dcc247a3d6e23072641e62566cd96ee8114b227b8f498f9a578fc6f687d07acdbb523b6029c5bbeecd5efaf4c4d35304e5e6b5b95db0e89299529eb953f52ca3247d4cd03a15939e7d638b168fd00a1cb5b0cc5c2cc98175c1ad0b959c2ab2f17f917c0ccee8c3fe589b4cb441e817f75e575fc96a4fe7bfea897f57692b050d2b'
@@ -327,7 +327,7 @@ $$C_1^u * C_2^v = M^{e_1} . u  .  M^{e_2} . v = M^{e_1 . u + e_2 . v} = M$$
 Từ đó ta sẽ khôi phục được bản mã.
 
 
-```python3
+```python
 # RSA5 byuctf 2023
 
 from Crypto.Util.number import  * 
@@ -458,7 +458,7 @@ Sau đây là ví dụ áp dụng ``boneh durfee`` trong bài ``Everything is St
 
 Ở đây matrix của nó rất to nên ta không thể lập bằng tay trên sage được
 
-```python3
+```python
 import itertools
 from sage.all import  * 
 
