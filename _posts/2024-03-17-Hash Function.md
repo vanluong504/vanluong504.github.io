@@ -3,7 +3,7 @@ title: Hash Function
 date: 2024-03-17 12:00:00
 categories: [Cryptography]
 tags: [Cryptography, Learning]
-image: '/assets/image/Hash/function_hash_criptomonedas_intro.png'
+image: '/assets/image/Hash/funcion_hash_criptomonedas_intro.png'
 math: true
 ---
 
