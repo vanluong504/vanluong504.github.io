@@ -276,7 +276,7 @@ $$|\frac{e}{n} - \frac{k}{d}| < |\frac{1}{d * n^{\frac{1}{4}} * \sqrt{n}}| < |\f
 
 Cuối cùng có được
 
-$\mid \frac{e}{n} - \frac{k}{d} \mid < \frac{1}{2d^2}$
+$$\mid \frac{e}{n} - \frac{k}{d} \mid < \frac{1}{2d^2}$$
 
 
 Đây là một quan hệ xấp xỉ cổ điển. Các số lượng phân số $\frac{k}{d}$ với d < N gần đúng với $\frac{e}{N}$ bị giới hạn bởi $log_2N$. Thực tế, tất cả các phân số như vậy thu được dưới dạng các phần tử hội tụ của khai triển phân số liên tục của $\frac{e}{N}$ . Tất cả người ta phải làm là tính log N hội tụ của phân số tiếp tục cho $\frac{e}{N}$. Một trong số này sẽ bằng $\frac{k}{d}$. Vì $ed − kphi(N) = 1$, nên ta có $gcd(k, d) = 1$, và do đó $\frac{k}{d}$ là phân số rút gọn. Đây là một thuật toán thời gian tuyến tính để khôi phục khóa bí mật d.
