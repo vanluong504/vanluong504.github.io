@@ -7,9 +7,6 @@ image: '/assets/image/ECC/ECC3.gif'
 math: true
 ---
 
-## ELLIPTIC CURVES IN CRYPTOGRAPHY
-
-## ELLIPTIC CURVES IN CRYPTOGRAPHY
 ### Đường cong Elliptic
 
 Đường cong Elliptic là tập hợp các điểm có toạ độ $(x, y)$ thỏa mãn phương trình sau đây: $$y^2 +a_1xy + a_3y = x^3 + a_2x^2 + a_4x + a_6$$
