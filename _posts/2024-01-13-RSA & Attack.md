@@ -7,7 +7,7 @@ image: '/assets/image/RSA/RSA_intro.jpg'
 math: true
 ---
 
-# 1. RSA và các cách tấn công thường gặp của RSA
+# 1. RSA và các kiểu tấn công thường gặp của RSA
 
 ## 1. RSA
 
