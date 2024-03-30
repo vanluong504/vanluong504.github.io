@@ -401,9 +401,17 @@ print(encrypted)
 # b'V\x1b\xc6&\x04Z\xb0c\xec\x1a\tn\xd9\xa6(\xc1\xe1\xc5I\xf5\x1c\xd3\xa7\xdd\xa0\x84j\x9bob\x9d"\xd8\xf7\x98?^\x9dA{\xde\x08\x8f\x84i\xbf\x1f\xab'
 ```
 
-Challenge provide point a, A, B, G in GF(p) and secret : FLAG, b, priv_a, priv_b , p
+Challenge provide point a, A, B, G in GF(p) and secret : **FLAG, b, priv_a, priv_b , p**
 
-We need to find again p : $$y^2 = x^3 + 726x + b$$ $$Gx^3 + 726Gx + b = Gy^2 + k1p \ \ \  (1)$$ $$Ax^3 + 726Ax + b = Ay^2 + k2p \ \ \ (2)$$ $$Bx^3 + 726Bx + b = By^2 + k3p \ \ \  (3)$$
+We need to find again p 
+
+$$y^2 = x^3 + 726x + b$$ 
+
+$$Gx^3 + 726Gx + b = Gy^2 + k1p \ \ \  (1)$$ 
+
+$$Ax^3 + 726Ax + b = Ay^2 + k2p \ \ \ (2)$$ 
+
+$$Bx^3 + 726Bx + b = By^2 + k3p \ \ \  (3)$$
 
 Get (1)-(2) and (1)-(3)
 
