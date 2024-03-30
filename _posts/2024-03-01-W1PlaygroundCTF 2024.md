@@ -77,8 +77,11 @@ p = n // q
 
 print(long_to_bytes(pow(c, pow(e, -1, (p-1)*(q-1)), n)))
 ```
+
 > FLAG : W1{now_you_know_how_to_use_continued_fraction!}
+
 ### Rot the flag
+
 ``chall.py``
 ```python
 from secrets import token_urlsafe
