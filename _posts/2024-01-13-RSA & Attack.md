@@ -214,7 +214,7 @@ $$M ≡ c3[n3]$$
 
 Để tìm được M thì điều kiện cần có là 
 
-$$GCD(ni, nj) = 1$$
+$$GCD(n_i, n_j) = 1$$
 
 Ta có thể áp dụng [Chinese Remainder Theorem](https://en.wikipedia.org/wiki/Chinese_remainder_theorem#:~:text=In%20mathematics%2C%20the%20Chinese%20remainder,are%20pairwise%20coprime%20(no%20two)). Sau khi tính được M, ta sẽ tìm lại được m (vì $m < n_i$ nên $M = m ^ 3 < N$, ta chỉ cần tính căn bậc 3 của M).
 
@@ -264,8 +264,15 @@ $$|N − \phi(N)| < 3 \sqrt{N}$$
 
 Sử dụng N thay cho $\phi(N)$, chúng tôi thu được
 
+$$|\frac{e}{N} - \frac{k}{d} = |\frac{ed - k \phi(N) - kN + k \phi(n)}{Nd}| = |\frac{1 - k(N - \phi(N))}{Nd}| \le |\frac{3k \sqrt{N}}{Nd}| = |\frac{3k}{d \sqrt{N}}| $$
+
 Bây giờ, $k * \phi(N) = ed − 1 < ed$ . Vì $e < phi(N)$ , chúng ta thấy rằng $k < d < \frac{1}{3}N^{\frac{1}{4}}$ . Do đó chúng tôi có được
 
+$$|\frac{e}{n} - \frac{k}{d}| < |\frac{3 * \frac{1}{3}n^{\frac{1}{4}} * \sqrt{n}}{n * d}|$$
+
+$$|\frac{e}{n} - \frac{k}{d}| < |\frac{n^{\frac{1}{4}}}{d * \sqrt{n}}|$$
+
+$$|\frac{e}{n} - \frac{k}{d}| < |\frac{1}{d * n^{\frac{1}{4}} * \sqrt{n}}| < |\frac{1}{d * n^{\frac{1}{4}}}|$$
 
 Cuối cùng có được
 
