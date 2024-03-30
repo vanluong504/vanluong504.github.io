@@ -9,7 +9,7 @@ math: true
 ### RealSA
 
 ``chall.py``
-```python3
+```python
 from Crypto.Util.number import *
 from sage.all import *
 from decimal import *
@@ -80,7 +80,7 @@ print(long_to_bytes(pow(c, pow(e, -1, (p-1)*(q-1)), n)))
 > FLAG : W1{now_you_know_how_to_use_continued_fraction!}
 ### Rot the flag
 ``chall.py``
-```python3
+```python
 from secrets import token_urlsafe
 from sage.all import GF, random_matrix, matrix, random_prime
 
@@ -105,6 +105,7 @@ out.write(f'{p = }\n')
 out.write(f"rot_matrix = {list(rot_matrix)}\n")
 out.write(f"flag_out = {list(flag_out)}")
 ```
+
 ``output.py``
 ```
 p = 73060636801081810825825083216814151604788400712743233358301750982499337725703
@@ -157,7 +158,7 @@ print(flag)
 ### Count to three
 
 ``chall.py``
-```python3
+```python
 from Crypto.Util.number import *
 
 flag = bytes_to_long(open("flag.txt", "rb").read())
