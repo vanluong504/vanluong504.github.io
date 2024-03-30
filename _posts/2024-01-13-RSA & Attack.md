@@ -259,9 +259,12 @@ print(long_to_bytes(m))
 
 Bằng chứng dựa trên các xấp xỉ sử dụng các phân số liên tục. Vì $ed = 1 mod \phi(N)$, nên tồn tại k sao cho $ed − k \phi(N) = 1$. Do đó, $\mid \frac{e}{\phi(N)} - \frac{k}{d} \mid = \frac{1}{d.\phi(N)}$
 
-Do đó, $\frac{k}{d}$ là một xấp xỉ của $\frac{e}{phi(N)}$. Mặc dù Marvin không biết phi(N), anh ấy có thể sử dụng N để tính gần đúng nó. Thật vậy, vì $\phi(N) = N − p − q + 1$ và $p + q − 1 < 3 \sqrt{N}$ , nên chúng ta có $|N − \phi(N)| < 3 \sqrt{N}$ . Sử dụng N thay cho $\phi(N)$, chúng tôi thu được: 
+Do đó, $\frac{k}{d}$ là một xấp xỉ của $\frac{e}{phi(N)}$. Mặc dù Marvin không biết phi(N), anh ấy có thể sử dụng N để tính gần đúng nó. Thật vậy, vì $\phi(N) = N − p − q + 1$ và $p + q − 1 < 3 \sqrt{N}$ , nên chúng ta có 
+$$|N − \phi(N)| < 3 \sqrt{N}$$ 
 
-Bây giờ, $k * \phi(N) = ed − 1 < ed$ . Vì $e < phi(N)$ , chúng ta thấy rằng $k < d < \frac{1}{3}N^{\frac{1}{4}}$ . Do đó chúng tôi có được: 
+Sử dụng N thay cho $\phi(N)$, chúng tôi thu được
+
+Bây giờ, $k * \phi(N) = ed − 1 < ed$ . Vì $e < phi(N)$ , chúng ta thấy rằng $k < d < \frac{1}{3}N^{\frac{1}{4}}$ . Do đó chúng tôi có được
 
 
 Cuối cùng có được
