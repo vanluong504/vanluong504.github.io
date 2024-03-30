@@ -7,9 +7,7 @@ image: '/assets/image/RSA/RSA_intro.jpg'
 math: true
 ---
 
-# 1. RSA và các kiểu tấn công thường gặp của RSA
-
-## 1. RSA
+## RSA
 
 Trong mật mã học, RSA là một thuật toán mật mã hóa khóa công khai. Đây là thuật toán đầu tiên phù hợp với việc tạo ra chữ ký điện tử đồng thời với việc mã hóa. Nó đánh dấu một sự tiến bộ vượt bậc của lĩnh vực mật mã học trong việc sử dụng khóa công cộng. RSA đang được sử dụng phổ biến trong thương mại điện tử và được cho là đảm bảo an toàn với điều kiện độ dài khóa đủ lớn.
 
@@ -69,9 +67,9 @@ Mã hóa RSA đóng vai trò quan trọng trong việc thiết lập kết nối
 
 RSA còn sử dụng để tạo chữ kí số, xác thực Certificate HTTPS.
 
-## 2. Các cách tấn công thường gặp của RSA
+## Attack RSA
 
-### 1. Small n
+### Small n
 
 Nếu n nhỏ (chiều dài n < 256 bit), ta có thể dễ dàng factorize n bằng cách brute-force số p. Chiều dài n được khuyến cáo là 1024 bit.
 
@@ -99,7 +97,7 @@ decrypted = pow(ct,d,n)
 print(long_to_bytes(decrypted))
 ```
 
-### 2. Small e
+### Small e
 
 
 Giả sử Alice muốn chia sẻ một tin nhắn M nhỏ (một khóa đối xứng) qua một kênh không an toàn. Cô ấy mã hóa nó bằng RSA. n được chọn từ các số nguyên tố mạnh và khá lớn nhưng cô ấy đã chọn $e = 3$.
@@ -139,7 +137,7 @@ print(long_to_bytes(gmpy2.iroot(cipher, e)[0]))
 # KCSC{123456789}
 ```
 
-### 3.Fermat Attack
+### Fermat Attack
 
 Trong thực tế, ta cần chọn p, q có cùng độ dài bit để tạo được 1 mã RSA mạnh, tuy nhiên nếu p, q quá gần nhau thì lại tạo ra lỗ hổng bảo mật khi mà attacker có thể dễ dàng factorize n
 
@@ -196,7 +194,7 @@ if __name__ == '__main__':
     main()
 ```
 
-### 4.Hastad Broadcast Attack
+### Hastad Broadcast Attack
 
 Đặt bối cảnh một mạng nội bộ sử dụng RSA làm phương thức bảo mật truyền tin. Mỗi máy tính trong mạng LAN sẽ có một bộ Public Key $(n_i, e_i)$ riêng. Giả sử rằng, quản trị viên muốn sử dụng hệ thống mã hóa đơn giản nên anh ta chọn 1 số e nhỏ (e = 3) để dùng chung cho tất cả các máy trong mạng LAN, hay nói cách khác $e_1 = e_2 = e_n = e = 3$ .
 
@@ -251,7 +249,7 @@ m = gmpy2.iroot(M,e)[0]
 print(long_to_bytes(m))
 ```
 
-### 5.Wiener Attack
+### Wiener Attack
 
 Để giảm thời gian giải mã (hoặc thời gian tạo chữ ký), người ta có thể muốn sử dụng một giá trị nhỏ của d hơn là một d ngẫu nhiên. Do lũy thừa mô-đun cần có thời gian tuyến tính trong log2 d, nên một d nhỏ có thể cải thiện hiệu suất ít nhất là hệ số 10 (đối với mô-đun 1024 bit). Thật không may, một cuộc tấn công thông minh của M. Wiener [19] cho thấy rằng một d nhỏ dẫn đến sự phá vỡ hoàn toàn hệ thống mật mã.
 
@@ -306,9 +304,9 @@ else:
 print(long_to_bytes(pow(c,d,n)))
 ```
 
-### 6. Common modulus
+### Common modulus
 
-#### 1.External attack
+#### External attack
 
 Cuộc tấn công mô đun phổ biến lợi dụng thực tế là nếu hai khóa công khai RSA chia sẻ cùng một mô đun (n), các bản mã được mã hóa bằng các khóa này cũng sẽ chia sẻ cùng một mô đun. Giả sử chúng ta có hai bản mã, C1 và C2, được mã hóa bằng các khóa công khai tương ứng (e1, n) và (e2, n).
 
@@ -372,7 +370,7 @@ m= (pow(c1_inv,-u)  *  pow(c2,v))%n
 print(long_to_bytes(m))
 ```
 
-#### 2.internal attacker
+#### internal attacker
 
 Giả định rằng bạn là một phần của nhóm và sở hữu khóa công khai và riêng tư với cùng mô đun với những người khác.
 
@@ -391,7 +389,7 @@ Nếu kết quả không phải là số nguyên, hãy tăng k dần cho đến 
 
 Bây giờ bạn đã biết φ(n) và e của nạn nhân, bạn có thể tính toán các khóa $d(victim) = e(victim) ^ {-1} \ mod \ φ(n)$ riêng tương ứng và giải mã các tin nhắn
 
-### 7.Blinding Attack
+### Blinding Attack
 
 Khi Marvin cố gắng gửi một tin nhắn tương tự như Alices, Bob nhận thấy rằng tin nhắn có một số thông điệp nguy hiểm trong đó và từ chối ký vào tin nhắn. Nhưng RSA vốn không có bất kỳ cơ chế kiểm tra nào, những ràng buộc này có thể được bỏ qua một cách dễ dàng. Đôi khi chỉ cần nhân thông điệp nguy hiểm với một số nguyên tố là đủ. Vì vậy, Marvin có thể thử một cuộc tấn công mù bằng cách sử dụng các bước sau:
 
@@ -405,7 +403,7 @@ $$S’ = (M’)^d \ (mod(N)) = (r^e * M)^d \ (mod(N)) = r^{ed}  *  M^d \ (mod(N)
 
 $$\frac{S'}{r} = M^d \ (mod(N))$$
 
-### 8. Multi-prime RSA
+### Multi-prime RSA
 
 Với n thông thường chúng ta thường factor ra 2 số nguyên tố nhưng ở trường hợp sau thì n factor ra nhiều số nguyên tố.
 
@@ -437,7 +435,7 @@ $$\phi(n) = (p_1-1)  *  (p_2-1)  *  (p_3-1)  *  ...  *  (p_n-1)$$
 True
 ```
 
-### 9. Boneh Durfee Attack
+### Boneh Durfee Attack
 
 [Boneh Durfee Attack](https://www.sciencedirect.com/science/article/pii/S0304397518305371) là sự mở rộng, nâng cao hơn so với Wiener Attack
 
@@ -542,7 +540,7 @@ if __name__ == '__main__':
 	boneh_durfee(N, e)
 ```
 
-### 10. Bleichenbacher’s Attack
+### Bleichenbacher’s Attack
  
 |00|02|Padding|00|Data block|
 |:--|:--|:--|:--|:--|
@@ -578,7 +576,7 @@ $$2B < m * s (mod(N)) < 3B$$
 
 Nếu thông điệp được chấp nhận, 2 byte đầu tiên được ``0x00 02`` và do đó thông điệp $$m * s \ \% \ N $$ hoàn toàn nhỏ hơn khi 2 byte đầu tiên được 0x00 03. Và giống như kẻ tấn công tiếp tục giảm ranh giới bằng cách thực hiện tìm kiếm nhị phân cho đến khi một giá trị duy nhất được tìm thấy.
 
-### 11. Brute force attack on small secret CRT-Exponents
+### Brute force attack on small secret CRT-Exponents
 
 Giả sử tôi có:
 
