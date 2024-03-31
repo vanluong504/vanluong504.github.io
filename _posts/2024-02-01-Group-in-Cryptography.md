@@ -28,13 +28,13 @@ $$\forall a \ ,b \ , \ c \in G, \ (a \ * \ b) \ * \ c \ = \ a \ * \ (b \ * \ c)$
 #### Phần tử đơn vị
 
 
-Tồn tại một phần tử $e$ trong nhóm $G$ sao cho: 
+Tồn tại một phần tử $e$ trong nhóm $G$ sao cho
 
 $$\forall a \in G, \ a \ * \ e \ = \ e \ * \ a \ = \ a$$
 
 #### Phần tử nghịch đảo
 
-$\forall a \in G$ tồn tại một phần tử $a^{-1}$ (phần tử nghịch đảo của a) trong nhóm $G$ sao cho: 
+$\forall a \in G$ tồn tại một phần tử $a^{-1}$ (phần tử nghịch đảo của a) trong nhóm $G$ sao cho
 
 $$a*a^{-1}=a^{-1}*a =e$$
 
@@ -49,6 +49,7 @@ Nhóm hữu hạn là một nhóm có số phần tử hữu hạn
 Xét một nhóm hữu hạn $G$
 
 1. Bậc của nhóm là số phần tử của nhóm đó, kí hiệu $|G|$
+
 2. Bậc của một phần tử $a \in G$ là số nguyên dương m nhỏ nhất sao cho $a^m = e$ với e là phần tử đơn vị của nhóm, kí hiệu $|a|$
 
 Kí hiệu $\langle a \rangle$ là nhóm con sinh bởi $a \in G$, $\langle a \rangle = \{a^k \vert k \in \mathbb{Z}\}$. Ta có tính chất
