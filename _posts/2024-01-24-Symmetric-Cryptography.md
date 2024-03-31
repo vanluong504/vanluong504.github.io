@@ -420,6 +420,7 @@ Từ vòng 1 đến vòng N - 1 thực hiên
 2. ShiftRows
 
 3. AddRoundKey
+
 ##### 4. Output
 
 Bản mã 128/192/256-bit kết quả là đầu ra của quá trình mã hóa.
