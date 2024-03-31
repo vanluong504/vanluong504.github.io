@@ -392,9 +392,11 @@ Thuật toán thực hiện một vòng thao tác đầu tiên theo thứ tự b
 1. AddRoundKey: round key đầu tiên được XOR với plaintext(bản rõ).
 
 2. Thực hiện 1 vòng đầu tiên gồm:SubBytes, ShiftRows, MixColumns, AddRound Key
+
 ##### 3. Round
 
 Thực hiện một vòng lặp, phụ thuốc vào kích thước khóa
+
 1. AES-128 - 10 vòng lặp
 
 2. AES-192 - 12 vòng lặp
