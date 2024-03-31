@@ -1266,7 +1266,7 @@ print("flag: " , pt1 + pt2 )
 
 ![image](/assets/image/AES/GCM_GMAC.png)
 
-Các bạn có thể đọc thêm tại [475.pdf](https://eprint.iacr.org/2016/475.pdf) and [here](http://blog.redrocket.club/2018/03/27/VolgaCTF-Forbidden/)
+Các bạn có thể đọc thêm tại [475.pdf](https://eprint.iacr.org/2016/475.pdf) and http://blog.redrocket.club/2018/03/27/VolgaCTF-Forbidden/
 
 Giả sử $g(X)\text{}$ là hàm $GHASH\text{}$
  
