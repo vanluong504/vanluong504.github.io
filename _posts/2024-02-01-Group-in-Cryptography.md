@@ -19,20 +19,24 @@ Nhóm là một tập hợp, $G$, cùng với phép toán hai ngôi $*$ (còn g�
 #### Tính đóng
 
 
-$\forall a, \ b \in G, \ (a * b) \in G$
+$$\forall a, \ b \in G, \ (a * b) \in G$$
 
 #### Tính kết hợp
 
-$\forall a \ ,b \ , \ c \in G, \ (a \ * \ b) \ * \ c \ = \ a \ * \ (b \ * \ c)$
+$$\forall a \ ,b \ , \ c \in G, \ (a \ * \ b) \ * \ c \ = \ a \ * \ (b \ * \ c)$$
 
 #### Phần tử đơn vị
 
 
-Tồn tại một phần tử $e$ trong nhóm $G$ sao cho: $$\forall a \in G, \ a \ * \ e \ = \ e \ * \ a \ = \ a$$
+Tồn tại một phần tử $e$ trong nhóm $G$ sao cho: 
+
+$$\forall a \in G, \ a \ * \ e \ = \ e \ * \ a \ = \ a$$
 
 #### Phần tử nghịch đảo
 
-$\forall a \in G$ tồn tại một phần tử $a^{-1}$ (phần tử nghịch đảo của a) trong nhóm $G$ sao cho: $$a*a^{-1}=a^{-1}*a =e$$
+$\forall a \in G$ tồn tại một phần tử $a^{-1}$ (phần tử nghịch đảo của a) trong nhóm $G$ sao cho: 
+
+$$a*a^{-1}=a^{-1}*a =e$$
 
 #### Tính giao hoán
 
