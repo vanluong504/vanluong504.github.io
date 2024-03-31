@@ -48,9 +48,9 @@ Nhóm hữu hạn là một nhóm có số phần tử hữu hạn
 
 Xét một nhóm hữu hạn $G$
 
-1. Bậc của nhóm là số phần tử của nhóm đó, kí hiệu $|G|$
+1. Bậc của nhóm là số phần tử của nhóm đó, kí hiệu $\vert G \vert$
 
-2. Bậc của một phần tử $a \in G$ là số nguyên dương m nhỏ nhất sao cho $a^m = e$ với e là phần tử đơn vị của nhóm, kí hiệu $|a|$
+2. Bậc của một phần tử $a \in G$ là số nguyên dương m nhỏ nhất sao cho $a^m = e$ với e là phần tử đơn vị của nhóm, kí hiệu $\vert a \vert$
 
 Kí hiệu $\langle a \rangle$ là nhóm con sinh bởi $a \in G$, $\langle a \rangle = \{a^k \vert k \in \mathbb{Z}\}$. Ta có tính chất
 
@@ -58,7 +58,7 @@ $\lvert \langle a \rangle \rvert = \lvert a \rvert$ ( Bậc của nhóm con sinh
 
 ### Định ý Lagrange
 
-Nếu $H$ là nhóm con của $G$ thì $|H|$ là ước của $|G|$
+Nếu $H$ là nhóm con của $G$ thì $\vert H \vert$ là ước của $\vert G \vert$
 
 Hệ quả:
 
