@@ -3,7 +3,7 @@ title: TamuCTF 2024 - Writeup
 date: 2024-04-07 12:00:00
 categories: [CTF]
 tags: [CTF,TamuCTF 2024]
-image: /assets/image/CTF/ACSC2024/logo.png
+image: /assets/image/CTF/TamuCTF_2024/logo.png
 math: true
 ---
 
