@@ -1,11 +1,3 @@
-<!-- ---
-title: W1PlaygroundCTF 2024 - Writeup
-date: 2024-03-01 00:00:00
-categories: [CTF]
-tags: [CTF,W1PlaygroundCTF 2024]
-image: /assets/image/CTF/W1PlaygroundCTF_2024/wannaone.png
-math: true
---- -->
 ### RealSA
 
 ``chall.py``
