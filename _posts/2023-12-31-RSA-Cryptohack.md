@@ -1,7 +1,7 @@
 ---
 title: RSA - Cryptohack
 date: 2023-12-31 12:00:00
-categories: [CTF]
+categories: [CTF, Cryptohack]
 tags: [Cryptohack]
 image: /assets/image/RSA/RSA_cryptohack.png
 math: true
