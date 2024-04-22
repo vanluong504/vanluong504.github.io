@@ -1,7 +1,7 @@
 ---
 title: RSA - Cryptohack
 date: 2023-12-31 12:00:00
-categories: [CTF, Cryptohack]
+categories: [CTF, Cryptohack, RSA]
 tags: [Cryptohack]
 image: /assets/image/RSA/RSA_cryptohack.png
 math: true
@@ -1615,6 +1615,12 @@ listener.start_server(port=13375)
 
 # e = 3
 ```
+
+Trong bài này khá đơn giản chỉ cần gửi đi một thông điệp msg sao cho
+
+$vote^e \mod n$ == b'VOTE FOR PEDRO' và loại bỏ phần pad ``\x00``
+
+Nhận thấy $vote^e < n$  lúc đó chúng ta chỉ cần tìm $vote^e$ = b'VOTE FOR PEDRO'
 ### 29. Let's Decrypt Again
 
 ``13394.py``
