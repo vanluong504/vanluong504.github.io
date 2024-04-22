@@ -1419,6 +1419,90 @@ input.
 listener.start_server(port=13386)
 ```
 
+Hãy để ý hàm ``pad()``
+
+```python
+def pad(self, flag):
+    m = bytes_to_long(flag)
+    a = random.randint(2, self.N)
+    b = random.randint(2, self.N)
+    return (a, b), a*m+b
+```
+Khi hàm pad được thực thi ``pad_msg = a * m + b``
+
+Khi đó 
+
+$$enc = (a * m + b)^e \mod N$$
+
+Nếu ta get 2 lần từ server thì sao
+
+$$
+\begin{cases}
+   enc_1 = (a_1 * m + b_1)^e \mod N \\
+   enc_2 = (a_2 * m + b_2)^e \mod N
+\end{cases}
+$$
+
+Ta nhận thấy trong Rsa có [Franklin–Reiter related-message attack](https://en.wikipedia.org/wiki/Coppersmith%27s_attack) thỏa mãn phương trình trên 
+
+[Đọc thêm](https://crypto.stackexchange.com/questions/30884/help-understanding-basic-franklin-reiter-related-message-attack) để hiểu hơn.
+
+$$
+\begin{cases}
+   g_1 = (a_1 * m + b_1)^e - enc_1 = 0 \mod N \\
+   g_2 = (a_2 * m + b_2)^e - enc_2 = 0 \mod N
+\end{cases}
+$$
+
+Nhận thấy 2 pt trên đều có chung nghiệm m nên ta sẽ sử dụng $gcd(g_1, g_2)$ trong vành $Z_n$ để tìm m
+
+
+``solved.sage``
+```python
+from Crypto.Util.number import *
+from pwn import *
+from json import *
+
+e = 11
+
+f = connect('socket.cryptohack.org', 13386)
+f.recv()
+
+f.sendline(dumps({'option': 'get_flag'}))
+g1 = loads(f.recvuntil('\n'))
+
+f.sendline(dumps({'option': 'get_flag'}))
+g2 = loads(f.recvuntil('\n'))
+
+
+enc_1 = g1["encrypted_flag"]
+enc_2 = g2["encrypted_flag"]
+
+a_1, b_1 = g1["padding"]
+a_2, b_2 = g2["padding"]
+
+n_1 = g1["modulus"]
+n_2 = g2["modulus"]
+
+assert n_1 == n_2
+print("challenge has been Franklin-Reiter attack ")
+print(a_1, a_2, b_1, b_2, enc_1, enc_2)
+
+p.<x> = PolynomialRing(Zmod(n_1))
+
+g1 = (a_1 * x + b_1) ** e - enc_1
+g2 = (a_2 * x + b_2) ** e - enc_2
+
+def gcd(a,b):
+    while b:
+        a, b = b, a % b
+    return a.monic()
+
+
+m = long_to_bytes(int(-gcd(g1, g2).coefficients()[0]))
+print(m)
+```
+
 ### 27. Null or Never
 ``pad_encrypt.py``
 ```python
@@ -1447,6 +1531,45 @@ print(f"c = {c}")
 # n = 95341235345618011251857577682324351171197688101180707030749869409235726634345899397258784261937590128088284421816891826202978052640992678267974129629670862991769812330793126662251062120518795878693122854189330426777286315442926939843468730196970939951374889986320771714519309125434348512571864406646232154103
 # e = 3
 # c = 63476139027102349822147098087901756023488558030079225358836870725611623045683759473454129221778690683914555720975250395929721681009556415292257804239149809875424000027362678341633901036035522299395660255954384685936351041718040558055860508481512479599089561391846007771856837130233678763953257086620228436828
+```
+
+Như đã thấy chúng ta biết được flag có độ dài 43 byte và được pad thêm 57 bytes ``\x00``
+
+```python
+FLAG = b"crypto{???????????????????????????????????}"
+
+
+def pad100(msg):
+    return msg + b'\x00' * (100 - len(msg))
+```
+
+chúng ta đã biết được 1 phần của msg nên phần chứ biết sẽ đóng vai trò x (M là phần đã biết (crypto{}))
+
+$$f(x) = (M + x)^e - c$$
+
+Ngay sau ``crypto{???????????????????????????????????}``, có 57 ký tự khác, 1 byte null, vì vậy chúng ta có 58. Nếu cờ là m, tin nhắn ban đầu sẽ là 
+
+$$M = msg + ((2^8)*58)*e - c$$
+
+Chúng ta sử dụng small_roots() để giải quyết bài toán này.
+
+``solved.sage``
+```python
+from Crypto.Util.number import *
+
+n = 95341235345618011251857577682324351171197688101180707030749869409235726634345899397258784261937590128088284421816891826202978052640992678267974129629670862991769812330793126662251062120518795878693122854189330426777286315442926939843468730196970939951374889986320771714519309125434348512571864406646232154103
+e = 3
+c = 63476139027102349822147098087901756023488558030079225358836870725611623045683759473454129221778690683914555720975250395929721681009556415292257804239149809875424000027362678341633901036035522299395660255954384685936351041718040558055860508481512479599089561391846007771856837130233678763953257086620228436828
+
+flag = b"crypto{???????????????????????????????????}" + b"\x00" * 57
+flag = flag.replace(b"?", b"\x00")
+m = bytes_to_long(flag)
+P.<x> = PolynomialRing(Zmod(n))
+f = (m + (2 **(8 * 58)) * x) ** e - c
+
+f = f.monic()
+f = f.small_roots(epsilon = 1 / 20)[0]
+print(b"crypto{" + long_to_bytes(int(f)) + b"}")
 ```
 
 ### 28. Vote for Pedro
