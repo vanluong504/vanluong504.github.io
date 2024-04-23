@@ -1616,9 +1616,7 @@ listener.start_server(port=13375)
 # e = 3
 ```
 
-Trong bài này khá đơn giản chỉ cần gửi đi một thông điệp msg sao cho
-
-$vote^e \mod n$ == b'VOTE FOR PEDRO' và loại bỏ phần pad ``\x00``
+Trong bài này khá đơn giản chỉ cần gửi đi một thông điệp msg 
 
 Như đã thấy N là một số nguyên lớn với độ dài 2048 bit, trong khi số mũ công khai e nhỏ chỉ bằng 3
 
@@ -1658,7 +1656,7 @@ $$\iff x * 256^{l + 1} + msg = v^3$$
 
 Khi đó vote cần tính sẽ là nghiệm của
 
-$$f(x) = x^3 - msg \mod 256^{15}$$
+$$f(v) = v^3 - msg \mod 256^{15}$$
 
 ``solved.py``
 ```python
@@ -1668,8 +1666,8 @@ from sage.all import *
 import json
 msg = b'VOTE FOR PEDRO'
 
-x = var('x')
-f = x ** 3 - bytes_to_long(msg)
+v = var('v')
+f = v ** 3 - bytes_to_long(msg)
 
 vote = solve_mod(f, 256**15)[0][0]
 print(vote)
