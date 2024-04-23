@@ -1620,7 +1620,65 @@ Trong bài này khá đơn giản chỉ cần gửi đi một thông điệp msg
 
 $vote^e \mod n$ == b'VOTE FOR PEDRO' và loại bỏ phần pad ``\x00``
 
-Nhận thấy $vote^e < n$  lúc đó chúng ta chỉ cần tìm $vote^e$ = b'VOTE FOR PEDRO'
+Như đã thấy N là một số nguyên lớn với độ dài 2048 bit, trong khi số mũ công khai e nhỏ chỉ bằng 3
+
+Điều này có nghĩa là chúng ta có thể sử dụng một số nhỏ và phép tính dưới modulus N.
+
+Ví dụ
+```python
+from Crypto.Util.number import*
+p = getPrime(1024)
+q = getPrime(1024)
+ALICE_N = p * q
+ALICE_E = 3
+
+plaintext = b"VOTE FOR PEDRO"
+
+b_x00 = b"\x00"
+
+left = long_to_bytes(getPrime(100))
+print(left)
+
+vote = left + b_x00 + plaintext
+print(vote)
+
+verified_vote = vote.split(b'\00')[-1]
+print(verified_vote)
+```
+
+Cuối cùng thì trả về b"VOTE FOR PEDRO".
+
+Nếu mà với ``verified_vote`` trên ``13375.py`` thì tất cả các byte trước ``b"\x00"`` sẽ bị xóa hết
+
+Dựa vào đó chúng ta sẽ có ``< random number >\x00VOTE FOR PEDRO``
+
+Khi đó ``(random number + b'\00' + msg) = pow(vote, e, n)``
+
+$$\iff x * 256^{l + 1} + msg = v^3$$
+
+Khi đó vote cần tính sẽ là nghiệm của
+
+$$f(x) = x^3 - msg \mod 256^{15}$$
+
+``solved.py``
+```python
+from Crypto.Util.number import *
+from pwn import *
+from sage.all import * 
+import json
+msg = b'VOTE FOR PEDRO'
+
+x = var('x')
+f = x ** 3 - bytes_to_long(msg)
+
+vote = solve_mod(f, 256**15)[0][0]
+print(vote)
+
+f = remote('socket.cryptohack.org', 13375, level = "debug")
+f.recvline()
+f.sendline(json.dumps({'option': 'vote', 'vote': hex(vote)}))
+f.interactive()
+```
 ### 29. Let's Decrypt Again
 
 ``13394.py``
