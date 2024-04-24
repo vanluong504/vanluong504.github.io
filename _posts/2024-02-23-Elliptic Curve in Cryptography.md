@@ -417,7 +417,9 @@ Khi đó ta sẽ có tọa độ điểm $P(x, \ y)$, tọa **x** của $P$ chí
 
 Để tính được **s** ta cần hash **m** (messeage mà ta cần ký)
 
-Khi đó ta có $$s = k^{-1}(m+d_A \ × \ r)(mod \ p)$$
+Khi đó ta có 
+
+$$s = k^{-1}(m+d_A \ × \ r)(mod \ p)$$
 
 #### Xác minh chữ ký
 
@@ -425,21 +427,37 @@ Sử dụng public key $Q_A$ cùng điểm $G$ và tin nhắn đã hash **m**
 
 Tính nghịch đảo của **s** trong chữ ký ($s^{-1}$)
 
-Khôi phục điểm **P** từ **G**, tin nhắn đã hash **m**, $s^{-1}$, $Q_A$  $$P = s^{-1} × m × G + s^{-1} × r × Q_A$$
+Khôi phục điểm **P** từ **G**, tin nhắn đã hash **m**, $s^{-1}$, $Q_A$  
+
+$$P = s^{-1} × m × G + s^{-1} × r × Q_A$$
 
 Nếu tọa độ của **x** của **P(x, y)** bằng **r** thì chữ ký hợp lệ
 
-Hay $$P = s^{-1} × m × G + s^{-1} × r × Q_A$$ $$= (m+r × d_A)×s^{-1}×G$$ $$= (m + r × d_A)×(m+r×d_A)^{-1}×(k^{-1})^{-1}×G$$ $$= k×G$$
+Hay 
+
+$$P = s^{-1} × m × G + s^{-1} × r × Q_A$$ 
+
+$$= (m+r × d_A)×s^{-1}×G$$ 
+
+$$= (m + r × d_A)×(m+r×d_A)^{-1}×(k^{-1})^{-1}×G$$ 
+
+$$= k×G$$
 
 ### Trao đổi khóa ECDH
 
 ECDH  là một giao thức trao đổi khóa dựa trên ECC. Nó được thiết kế để cung cấp một loạt các mục đích an toàn tùy theo từng ứng dụng như xác thực khóa ẩn đơn phương; xác thực khóa ẩn lẫn nhau; đảm bảo an toàn khóa đã biết và an toàn chuyển tiếp, phụ thuộc vào các yếu tố như liệu các khóa công khai có được trao đổi theo cách xác thực không và liệu cặp khóa là tạm thời hay là tĩnh (không thay đổi theo thời gian). Giao thức này cũng chính là một biến thể của giao thức Diffie-Hellman.
 
-Alice và Bob đồng ý sử dụng một đường cong elip cụ thể E(Fp) và 1 điểm P ∈ E(Fp). Alice chọn số nguyên bí mật nA và Bob chọn số bí mật số nguyên nB . Họ tính toán các bội số liên quan $$Q_A = n_A P$$ $$Q_B = n_B P$$
+Alice và Bob đồng ý sử dụng một đường cong elip cụ thể E(Fp) và 1 điểm P ∈ E(Fp). Alice chọn số nguyên bí mật nA và Bob chọn số bí mật số nguyên nB . Họ tính toán các bội số liên quan 
+
+$$Q_A = n_A P$$ 
+
+$$Q_B = n_B P$$
 
 Sau đó, Alice sử dụng hệ số nhân bí mật của mình để tính $n_AQ_B$ và Bob tính toán $n_BQ_A$ theo cách tương tự
 
-Giá trị bí mật được chia sẻ là $$n_AQ_B = n_A(n_BP) = n_B(n_AP) = n_BQ_A$$
+Giá trị bí mật được chia sẻ là 
+
+$$n_AQ_B = n_A(n_BP) = n_B(n_AP) = n_BQ_A$$
 
 ![image](/assets/image/ECC/ECC7.png)
 
