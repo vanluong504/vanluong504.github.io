@@ -1802,4 +1802,122 @@ class Challenge():
 listener.start_server(port=13394)
 ```
 
-Đang update
+Chal này chúng ta sẽ biết thêm 1 cách tấn công của RSA là [DUPLICATE SIGNATURE KEY SELECTION (DSKS)](https://eprint.iacr.org/2011/343.pdf, http://mpqs.free.fr/corr98-42.pdf#page=11)
+
+Như trên ta thấy chal cho ta chọn 3 option với kiểu trả về ương ứng
+
+**"option": "get_signature"** $\iff$ N, E, Signature
+
+**"option": "set_pubkey"** $\iff$ suffix
+
+**"option": "claim"** $\iff$ shares
+
+Phân tích kĩ hơn ta có
+```python
+PATTERNS = [
+    re.compile(r"^This is a test(.*)for a fake signature.$").match,
+    re.compile(r"^My name is ([a-zA-Z\s]+) and I own CryptoHack.org$").match,
+    btc_check
+]
+```
+và bypass qua 
+
+```python
+if not (0 <= index < len(PATTERNS)):
+    return {"error": "invalid index"}
+```
+
+Thì chúng ta phải send 3 msg.
+
+```
+msg1 = "This is a test for a fake signature." + suffix
+msg2 = "My name is crypto and I own CryptoHack.org" + suffix
+msg3 = "Please send all my money to " + bitcoin_address + suffix
+```
+
+Ta có thể gửi E, N để server tính theo E, N đó sao cho
+
+$$
+\begin{cases}
+   s^{e_1} = m_1 \\
+   s^{e_2} = m_2 \\
+   s^{e_3} = m_3
+\end{cases}
+$$
+
+Nếu thỏa mãn khi đó flag = xor() của 3 output khi ta gửi 3 lần **"option": "claim"**
+
+Bài toán trở về bài toán sẽ quy về tìm e là dlog của m trong trường mod n. Khi đó chúng ta sẽ chọn N là 1 smooth number để việc tính DLP đơn giản hơn.
+
+**btc_check**. Tài khoản phải là một address bitcoin, chúng ta sử dụng web [spinthewheel.io](https://spinthewheel.io/bitcoin-address-generator#google_vignette) hoặc module [bitcoin python](https://pypi.org/project/bitcoin/)
+
+``solved.py``
+```python
+from bitcoin import random_key, privtopub, pubtoaddr
+from sage.all import Mod, discrete_log
+from Crypto.Util.number import *
+from pkcs1 import emsa_pkcs1_v15
+from pwn import *
+from json import *
+
+f = remote('socket.cryptohack.org', 13394, level = 'debug')
+f.recvline()
+
+f.sendline(dumps({"option": "get_signature"}))
+
+s = int(loads(f.recvline())['signature'], 16)
+
+n = int(getPrime(16) ** 128)
+
+f.sendline(dumps({'option': 'set_pubkey', 'pubkey': hex(n)}))
+
+suffix = loads(f.recv())['suffix']
+
+btc_check = pubtoaddr(privtopub(random_key()))
+
+m1 = 'This is a test for a fake signature.' + suffix
+m2 = 'My name is Jack and I own CryptoHack.org' + suffix
+m3 = "Please send all my money to " + btc_check + suffix
+
+msg1 = bytes_to_long(emsa_pkcs1_v15.encode(m1.encode(), 768 // 8))
+msg2 = bytes_to_long(emsa_pkcs1_v15.encode(m2.encode(), 768 // 8))
+msg3 = bytes_to_long(emsa_pkcs1_v15.encode(m3.encode(), 768 // 8))
+
+s = Mod(s, n)
+e1 = discrete_log(msg1, s)
+e2 = discrete_log(msg2, s)
+e3 = discrete_log(msg3, s)
+
+print(pow(s, e1, n) == msg1)
+print(pow(s, e2, n) == msg2)
+print(pow(s, e3, n) == msg3)
+
+option1 = {
+    'option': 'claim',
+    'msg': m1,
+    'index': int(0),
+    'e': hex(e1)
+}
+f.sendline(dumps(option1).encode())
+secret1 = bytes.fromhex(loads(f.recv())['secret'])
+
+option2 = {
+    'option': 'claim',
+    'msg': m2,
+    'index': int(1),
+    'e': hex(e2)
+}
+f.sendline(dumps(option2).encode())
+secret2 = bytes.fromhex(loads(f.recv())['secret'])
+
+option3 = {
+    'option': 'claim',
+    'msg': m3,
+    'index': int(2),
+    'e': hex(e3)
+}
+f.sendline(dumps(option3).encode())
+secret3 = bytes.fromhex(loads(f.recv())['secret'])
+
+print(xor(xor(secret1, secret2), secret3))
+```
