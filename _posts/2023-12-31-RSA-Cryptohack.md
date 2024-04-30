@@ -1802,7 +1802,7 @@ class Challenge():
 listener.start_server(port=13394)
 ```
 
-Chal này chúng ta sẽ biết thêm 1 cách tấn công của RSA là [DUPLICATE SIGNATURE KEY SELECTION (DSKS)](https://eprint.iacr.org/2011/343.pdf, http://mpqs.free.fr/corr98-42.pdf#page=11)
+Chal này chúng ta sẽ biết thêm 1 cách tấn công của RSA là [DUPLICATE SIGNATURE KEY SELECTION (DSKS)](https://eprint.iacr.org/2011/343.pdf, **corr98-42.pdf#page=11**)
 
 Như trên ta thấy chal cho ta chọn 3 option với kiểu trả về ương ứng
 
@@ -1813,6 +1813,7 @@ Như trên ta thấy chal cho ta chọn 3 option với kiểu trả về ương 
 **"option": "claim"** $\iff$ shares
 
 Phân tích kĩ hơn ta có
+
 ```python
 PATTERNS = [
     re.compile(r"^This is a test(.*)for a fake signature.$").match,
@@ -1841,7 +1842,7 @@ $$
 \begin{cases}
    s^{e_1} = m_1 \\
    s^{e_2} = m_2 \\
-   s^{e_3} = m_3
+   s^{e_3} = m_3 \\
 \end{cases}
 $$
 
