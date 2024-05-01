@@ -86,13 +86,39 @@ while True:
         continue
 ```
 
-Hàm ``encrypt()`` hoạt động bằng cách chia ``pt`` thành các khối $B_0, B_1,... , B_n$ mỗi khối 16 bytes
+Hàm ``encrypt()`` hoạt động bằng cách chia ``pt`` thành các khối $B_0 B_1...B_n$ mỗi khối 16 bytes
 
+$$
+\begin{matrix}
+C_0 = f(B_0 \oplus \text{iv}) \\
+C_1 = f(B_1 \oplus B_0 \oplus C_0) \\
+C_2 = f(B_2 \oplus B_1 \oplus C_1) \\
+\vdots
+\end{matrix}
+$$
 
 |![image](/assets/image/CTF/GreyCat2024/hinh1_filter_ciph.png)|
 |:--|
 |_Hình 1: Encrypt_|
 
+Hàm ``decrypt()`` sẽ khôi phục plaintext từ ciphertext $ct = C_0 C_1 ... C_n$
+
+$$
+\begin{matrix}
+B_0 = f^{-1}(C_0) \oplus \text{iv} \\
+B_1 = f^{-1}(C_1) \oplus B_0 \oplus C_0 \\
+B_2 = f^{-1}(C_2) \oplus B_1 \oplus C_1 \\
+\vdots
+\end{matrix}
+$$
+
+|![image](/assets/image/CTF/GreyCat2024/hinh2_filter_ciph.png)|
+|:--|
+|_Hình 2: Decrypt_|
+
+PS: Trông khá lòng vòng và khó hiểu, mình đã phát hiện ra bug bài này. Khi ta nhập hai lần ``Encrypted secret`` thì server sẽ trả về flag.
+
+![image](/assets/image/CTF/GreyCat2024/flag_filter_ciph.png)
 
 ### Filter Plaintext
 
