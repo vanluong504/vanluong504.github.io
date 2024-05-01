@@ -86,6 +86,14 @@ while True:
         continue
 ```
 
+Hàm ``encrypt()`` hoạt động bằng cách chia ``pt`` thành các khối $B_0, B_1,... , B_n$ mỗi khối 16 bytes
+
+
+|<img id='hinh_1' src='/assets/image/CTF/GreyCat2024/hinh1_filter_ciph.png'>|
+|:--|
+|_Hình 1: Encrypt_|
+
+
 ### Filter Plaintext
 
 ``Filter_plaintext.py``
