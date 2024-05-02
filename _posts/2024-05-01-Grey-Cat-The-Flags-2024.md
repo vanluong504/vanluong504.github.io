@@ -198,6 +198,96 @@ while True:
         continue
 ```
 
+Chal này được mã hóa và giải mã theo
+
+|![image](/assets/image/CTF/GreyCat2024/Pcbc_encryption.png)|
+|:--|
+|_Hình 1: Encrypt_|
+
+|![image](/assets/image/CTF/GreyCat2024/Pcbc_decryption.png)|
+|:--|
+|_Hình 1: Decrypt_|
+
+Sau khi đọc code thì ta nhận ra mình cần phải tìm được ``secret`` để biết được ``secret_key``
+Tuy nhiên khi chúng ta decrypt ``enc_secret`` nếu như nó tồn tại trong ``secret`` thì sẽ bị xóa đi
+
+Giờ chúng ta sẽ đi tìm ``iv`` để encrypt ``secret`` trước
+
+```python
+tmp = iv
+ret = b""
+    
+for block in blocks:
+    res = xor(cipher.decrypt(block), tmp)
+    if (res not in secret):
+        ret += res
+    tmp = xor(block, res)
+```
+
+Khi chia ``enc_secret`` ra từng block, nếu chúng ta decrypt $encS0 + encS0$
+
+Trong $res_0 = S_0$ sẽ bị xóa
+
+Lúc này $tmp = D(encS_0) \oplus iv \oplus encS_0$ và sau đó nhận được  $res_1 = iv \oplus encS_0$
+
+Từ đó ta có thể tìm lại ``iv``
+
+Tiếp theo ta cần tìm $S_0$, nếu chúng ta decrypt $encS_1 + encS_0$ thì 
+
+$res_0 = D(encS_1) \oplus iv$
+
+$res_1 = D(encS_0) \oplus D(encS_1) \oplus iv \oplus encS_1 = S_0 \oplus D(encS_1) \oplus encS_1$
+
+Bây giờ ta chỉ cần lần lượt gửi $encS_i$ đến thì $res_0 = D(encS_i) \oplus iv$
+
+Tìm được $S_i = D(encS_i) \oplus encS_i \oplus S_{i-1} = res_O \oplus iv \oplus encS_i \oplus S_{i-1}$
+
+Python Implementation: 
+```python
+from pwn import *
+from Crypto.Util.number import *
+from Crypto.Cipher import AES
+from hashlib import md5
+
+f = remote("challs.nusgreyhats.org", 32223, level = 'debug')
+# f = process(["python3", "filter_plaintext.py"])
+
+enc_secret = bytes.fromhex((f.recvuntil("\n").decode()).replace("Encrypted secret: ",""))
+
+iv = bytes.fromhex((f.recvuntil("\n").decode()).replace("iv: ",""))
+ct = bytes.fromhex((f.recvuntil("\n").decode()).replace("ct: ",""))
+f.recvline()
+f.sendline(enc_secret[:16].hex() * 2)
+dec = bytes.fromhex((f.recvuntil("\n").decode()).replace("> ", ""))
+print(dec)
+
+iv_secret = xor(dec, enc_secret[:16])
+print("IV Secret:", iv_secret.hex())
+
+f.sendline(enc_secret[16:32].hex() + enc_secret[:16].hex())
+dec = bytes.fromhex((f.recvuntil("\n").decode()).replace("> ", ""))
+print(dec)
+
+dec_ct1 = xor(dec[:16], iv_secret)
+secret = xor(dec[16:32], dec_ct1)
+secret = xor(secret, enc_secret[16:32])
+
+print("Secret:", secret.hex())
+
+for i in range(16, len(enc_secret), 16):
+    f.sendline(enc_secret[i:i + 16].hex())
+    dec = bytes.fromhex((f.recvuntil("\n").decode()).replace("> ", ""))
+    tmp = xor(dec, iv_secret)
+    tmp = xor(tmp, enc_secret[i - 16:i])
+    tmp = xor(tmp, secret[i - 16:i])
+    secret += tmp
+    print("Secret:", secret.hex())
+
+cipher = AES.new(key=md5(secret).digest(), iv=iv, mode=AES.MODE_CBC)
+print(cipher.decrypt(ct))
+f.close()
+```
+
 ### AES
 
 ``AES_server.py``
