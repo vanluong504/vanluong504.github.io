@@ -3,7 +3,7 @@ title: Lattice Based Problems
 date: 2024-05-05 20-00-00
 categories: [Cryptography]
 tags: [Cryptography, Learning]
-image: '/assets/image/ECC/ECC3.gif'
+image: '/assets/image/Lattice/Logo.gif'
 math: true
 ---
 
