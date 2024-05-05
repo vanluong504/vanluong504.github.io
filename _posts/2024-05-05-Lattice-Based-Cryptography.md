@@ -70,7 +70,7 @@ Closest Vector Problem (CVP) là một trong những bài toán quan trọng nh�
 
 Trong cơ sở $B \in R^{n.n}$, chúng ta sẽ tìm thấy n vector độc lập tuyến tính $S = [s_1, s_2, ..., s_n]$ ($s_i \in L(B) = {Bx:x \in Z^n})$ 
 
-$max||v_i|| \le max||b_i||$, $||x|| = \sqrt{x_1^2 + x_2^2 +...+ x_n^2}$
+$max(v_i) \le max(b_i)$, $(x) = \sqrt{x_1^2 + x_2^2 +...+ x_n^2}$
 
 ![image](/assets/image/Lattice/SIVP.png)
 
