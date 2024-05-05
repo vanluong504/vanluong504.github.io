@@ -11,6 +11,22 @@ math: true
 
 Các cuộc tấn công mà chúng tôi sẽ mô tả sau cả hai đều sử dụng thuật toán giảm cơ sở mạng tinh thể Lenstra-Lenstra-Lovasz. Do đó, chúng ta cần phải hiểu mạng tinh thể là gì và tại sao thuật toán LLL này lại hữu ích như vậy. Hãy suy nghĩ về Lattices như Vector Spaces. Hãy tưởng tượng một không gian vectơ đơn giản của hai vector. Bạn có thể cộng chúng lại với nhau, nhân chúng với vô hướng (giả sử R) và nó kéo dài một không gian vector.
 
+Một số loại Lattice Based chính:
+
+ - Ring-LWE (Learning With Errors on Rings): Ring-LWE là một hệ thống mã hóa đối xứng được xây dựng trên cơ sở bài toán tìm một vector ngắn nhất trong một mạng lưới số học trên vòng. Ring-LWE được coi là một trong những hệ thống mã hóa đầu tiên và phổ biến nhất dựa trên lý thuyết lưới.
+
+ - NTRU (N-th degree truncated polynomial ring units): NTRU là một hệ thống mã hóa đối xứng được xây dựng trên cơ sở bài toán tìm một vector ngắn nhất trong một mạng lưới số học trên đa thức cắt bớt.
+
+ - LWE (Learning With Errors): LWE là một hệ thống mã hóa đối xứng được xây dựng trên cơ sở bài toán tìm một vector ngắn nhất trong một mạng lưới số học đa chiều. LWE là một trong những hệ thống mã hóa đối xứng đầu tiên được xây dựng dựa trên lý thuyết lưới.
+
+ - BLISS (Basic Lattice Signature Scheme): BLISS là một hệ thống chữ ký số dựa trên lý thuyết lưới, sử dụng các mạng lưới số học để tạo ra chữ ký số và xác thực tính hợp lệ của chữ ký số đó.
+
+ - LPR (Lyubashevsky-Peikert-Regev): LPR là một hệ thống mã hóa đối xứng dựa trên cơ sở bài toán tìm một vector ngắn nhất trong một mạng lưới số học đa chiều. Hệ thống này được xây dựng bởi Lyubashevsky, Peikert và Regev vào năm 2010.
+
+ - NewHope: NewHope là một hệ thống mã hóa đối xứng dựa trên cơ sở bài toán tìm một vector ngắn nhất trong một mạng lưới số học đa chiều. Nó được phát triển bởi Erdem Alkim, Léo Ducas, Thomas Pöppelmann và Peter Schwabe vào năm 2015.
+
+ - FHEW (Fully Homomorphic Encryption with Weakened Keys): FHEW là một hệ thống mã hóa đối xứng dựa trên cơ sở bài toán tìm một vector ngắn nhất trong một mạng lưới số học đa chiều. Nó được sử dụng để tạo ra các hệ thống mã hóa đa tầng hoàn toàn đồng nhất, cho phép tính toán trên dữ liệu được mã hóa mà không cần giải mã trước.
+
 ### Gram Schmidt
 
 Đây là một thuật toán để trực chuẩn hóa các vector cho trước, trong một không gian tích trong với đầu vào là một tập hợp hữu hạn các vector độc lập tuyến tính với nhau. Và tạo ra một tập hợp các vector khác đôi một vuông goc với với nhau.
