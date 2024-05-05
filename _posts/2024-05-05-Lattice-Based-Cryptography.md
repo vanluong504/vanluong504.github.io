@@ -62,7 +62,7 @@ Shortest Vector Problem (SVP) là một trong những bài toán quan trọng nh
 
 #### 2. Closest Vector Problem (CVP)
 
-Closest Vector Problem (CVP) là một trong những bài toán quan trọng nhất trong lý thuyết lattice, mục tiêu của CVP là tìm điểm trên lưới gần nhất với vector mục tiêu. Cho vectơ $w \in R^m$ không thuộc L, tìm vectơ $v \in L$ gần w nhất, tức là tìm vectơ $v \in L$ sao cho |v - w| được giảm thiểu.
+Closest Vector Problem (CVP) là một trong những bài toán quan trọng nhất trong lý thuyết lattice, mục tiêu của CVP là tìm điểm trên lưới gần nhất với vector mục tiêu. Cho vectơ $w \in R^m$ không thuộc L, tìm vectơ $v \in L$ gần w nhất, tức là tìm vectơ $v \in L$ sao cho $|v - w|$ được giảm thiểu.
 
 ![image](/assets/image/Lattice/CVP.png)
 
