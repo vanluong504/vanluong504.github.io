@@ -424,14 +424,183 @@ if check == password.hex():
 
 Để lấy được flag thì chúng ta cần phải nhập đúng passwd sau khi giải mã ``c_p``
 
-Passwd được mã hóa bằng AES và khi có độ dài > 4096 byte (256-block) thì mới được thực thi tiếp
-
 ```python
 if check == password.hex():
     print('flag:', "greyctf:::::::")
 ```
 
+Như ta thấy ở mix_columns() có sự khác biệt
 
+``original``
+```python
+def mix_single_column(a):
+    # see Sec 4.1.2 in The Design of Rijndael
+    t = a[0] ^ a[1] ^ a[2] ^ a[3]
+    u = a[0]
+    a[0] ^= t ^ xtime(a[0] ^ a[1])
+    a[1] ^= t ^ xtime(a[1] ^ a[2])
+    a[2] ^= t ^ xtime(a[2] ^ a[3])
+    a[3] ^= t ^ xtime(a[3] ^ u)
+
+
+def mix_columns(s):
+    for i in range(4):
+        mix_single_column(s[i])
+```
+
+``new chall greycat``
+```python
+def mix_single_column(a):
+    a[0], a[1], a[2], a[3] = a[1], a[2], a[3], a[0]
+
+def mix_columns(s):
+    for i in range(4):
+        mix_single_column(s[i])
+```
+
+Để hiểu rõ hơn chúng ta cần print() ở hàm ``encrypt_block()``
+```python
+def encrypt_block(self, plaintext):
+    assert len(plaintext) == 16
+    plain_state = bytes2matrix(plaintext)
+    add_round_key(plain_state, self._key_matrices[0])
+    for i in range(1, self.n_rounds):
+        sub_bytes(plain_state)
+        shift_rows(plain_state)
+        mix_columns(plain_state)
+        add_round_key(plain_state, self._key_matrices[i])
+        print(plain_state)
+    sub_bytes(plain_state)
+    shift_rows(plain_state)
+    add_round_key(plain_state, self._key_matrices[-1])
+    print(plain_state)
+    return matrix2bytes(plain_state)
+```
+
+Chúng ta sẽ thử đoạn code này để xem sự biến thứ tự của plaintext đối với ciphertext
+
+```python
+from aes import*
+from pwn import *
+
+AES = AES(b'0' * 16)
+ct = AES.encrypt(b'\x00'*16)[:16]
+print()
+x = AES.encrypt(b'\xaa' + b'\x00'*15)
+```
+```text
+[[49, 48, 48, 48], [1, 0, 0, 0], [49, 48, 48, 48], [1, 0, 0, 0]]
+[[166, 194, 165, 152], [196, 161, 198, 39], [150, 242, 149, 168], [244, 145, 246, 23]]
+[[122, 101, 73, 247], [1, 207, 61, 148], [252, 125, 65, 119], [168, 61, 189, 51]]
+[[109, 30, 30, 84], [144, 106, 206, 122], [53, 80, 9, 81], [210, 197, 161, 175]]
+[[109, 188, 152, 105], [83, 159, 103, 51], [180, 180, 182, 36], [255, 175, 233, 106]]
+[[162, 244, 125, 52], [244, 9, 193, 182], [18, 151, 151, 100], [131, 112, 90, 32]]
+[[222, 98, 205, 188], [46, 67, 90, 98], [156, 211, 88, 253], [148, 161, 57, 238]]
+[[112, 90, 37, 106], [170, 223, 42, 155], [51, 92, 243, 64], [128, 134, 119, 190]]
+[[232, 27, 125, 195], [240, 46, 158, 148], [255, 5, 209, 101], [47, 231, 239, 247]]
+[[172, 169, 109, 123], [1, 40, 16, 5], [32, 237, 245, 175], [178, 212, 231, 250]]
+[[130, 131, 131, 131], [178, 179, 179, 179], [130, 131, 131, 131], [178, 179, 179, 179]]
+[[168, 42, 171, 76], [44, 175, 46, 108], [152, 26, 155, 124], [28, 159, 30, 92]]
+[[49, 91, 243, 17], [42, 255, 82, 249], [166, 25, 221, 161], [104, 184, 111, 16]]
+[[241, 92, 23, 73], [187, 184, 36, 227], [126, 102, 178, 197], [166, 226, 102, 40]]
+[[3, 138, 213, 244], [51, 158, 124, 185], [138, 54, 125, 65], [199, 18, 158, 251]]
+[[114, 69, 112, 115], [124, 28, 135, 152], [162, 210, 2, 151], [152, 229, 239, 240]]
+[[67, 157, 246, 198], [19, 34, 205, 205], [20, 125, 80, 14], [69, 206, 242, 68]]
+[[249, 99, 22, 109], [51, 68, 251, 215], [138, 163, 228, 100], [116, 133, 136, 242]]
+[[109, 127, 90, 11], [176, 31, 160, 251], [44, 125, 203, 216], [106, 13, 165, 168]]
+[[11, 88, 76, 209], [106, 188, 201, 0], [71, 174, 180, 130], [165, 169, 12, 214]]
+
+[[49, 48, 48, 140], [1, 0, 0, 0], [49, 48, 48, 48], [1, 0, 0, 0]]
+[[166, 194, 165, 152], [196, 161, 166, 39], [150, 242, 149, 168], [244, 145, 246, 23]]
+[[122, 101, 73, 247], [1, 207, 61, 148], [252, 125, 65, 119], [168, 173, 189, 51]]
+[[109, 30, 30, 84], [144, 106, 206, 122], [135, 80, 9, 81], [210, 197, 161, 175]]
+[[109, 188, 152, 105], [83, 159, 103, 51], [180, 180, 182, 165], [255, 175, 233, 106]]
+[[162, 244, 125, 52], [244, 9, 193, 182], [18, 151, 151, 100], [131, 112, 106, 32]]
+[[222, 98, 205, 188], [46, 255, 90, 98], [156, 211, 88, 253], [148, 161, 57, 238]]
+[[124, 90, 37, 106], [170, 223, 42, 155], [51, 92, 243, 64], [128, 134, 119, 190]]
+[[232, 27, 125, 130], [240, 46, 158, 148], [255, 5, 209, 101], [47, 231, 239, 247]]
+[[172, 169, 109, 123], [1, 40, 16, 56], [32, 237, 245, 175], [178, 212, 231, 250]]
+[[130, 131, 131, 131], [178, 179, 179, 179], [130, 131, 131, 131], [178, 179, 179, 179]]
+[[168, 42, 171, 76], [44, 175, 46, 108], [152, 26, 155, 124], [28, 159, 30, 92]]
+[[49, 91, 243, 17], [42, 255, 82, 249], [166, 25, 221, 161], [104, 184, 111, 16]]
+[[241, 92, 23, 73], [187, 184, 36, 227], [126, 102, 178, 197], [166, 226, 102, 40]]
+[[3, 138, 213, 244], [51, 158, 124, 185], [138, 54, 125, 65], [199, 18, 158, 251]]
+[[114, 69, 112, 115], [124, 28, 135, 152], [162, 210, 2, 151], [152, 229, 239, 240]]
+[[67, 157, 246, 198], [19, 34, 205, 205], [20, 125, 80, 14], [69, 206, 242, 68]]
+[[249, 99, 22, 109], [51, 68, 251, 215], [138, 163, 228, 100], [116, 133, 136, 242]]
+[[109, 127, 90, 11], [176, 31, 160, 251], [44, 125, 203, 216], [106, 13, 165, 168]]
+[[11, 88, 76, 209], [106, 188, 201, 0], [71, 174, 180, 130], [165, 169, 12, 214]]
+```
+
+Như ta thấy sự khác biệt ở list đầu tiên giữa ``[49, 48, 48, 48]`` và [[49, 48, 48, 190]]
+
+Tiếp theo đó mình sẽ gửi lần lượt theo qui luật dịch trái ``b'\xaa'`` cho đến hết để lấy được sự thay đổi của nó
+
+```python
+from aes import*
+from pwn import *
+from Crypto.Util.number import*
+
+AES = AES(b'0' * 16)
+ct = AES.encrypt(b'\x00'*16)[:16]
+
+partners = []
+for i in range(16):
+    payload = b"\x00"*i + b'\xaa' + b'\x00'*(15-i)
+    new_ct = AES.encrypt(payload)
+    for j in range(16):
+        if new_ct[j] != ct[j]:partners.append(j)
+print(partners) 
+# [7, 12, 5, 14, 11, 0, 9, 2, 15, 4, 13, 6, 3, 8, 1, 10]
+```
+
+Giờ ta sẽ tấn công từng ký tự của passwd, nếu đúng byte đầu tiên, thì byte thứ 8 của ``xor(enc_p,ct)`` sẽ là byte 00, tiếp tục như thế với byte thứ 2 của passwd, thì byte thứ 13 của xor(enc_p,ct) sẽ là 00
+
+Việc tìm lại passwd rất đơn giản.
+
+Python Implementation:
+```python
+from pwn import *
+from aes import *
+from Crypto.Util.number import long_to_bytes, bytes_to_long 
+
+f = remote('challs.nusgreyhats.org', 35100, level = 'debug')
+
+plaintext = b''
+for i in range(256):
+    plaintext += bytes([i]*16)
+
+id = [7, 12, 5, 14, 11, 0, 9, 2, 15, 4, 13, 6, 3, 8, 1, 10]
+
+f.recvuntil(b'm: ')
+f.sendline(plaintext.hex().encode())
+
+f.recvuntil(b'c: ')
+c = bytes.fromhex(f.recvline().strip().decode())
+print(len(c))
+
+f.recvuntil(b'c_p: ')
+enc_p = bytes.fromhex(f.recvline().strip().decode())
+enc_p = enc_p[:16]
+
+pw = [b'\x00']*16
+for i in range(256):
+    block = c[i*16: (i+1)*16]
+    l = xor(block, enc_p)
+    for idx in range(len(l)):
+        if l[idx] == 0:
+            pw[id[idx]] = bytes([i])
+            break
+
+pw = b''.join(pw)
+pw = list(pw)
+for i in range(0, len(pw), 4):
+    pw[i:i+4] = pw[i+2: i+4] + pw[i:i+2]
+
+pw = bytes(pw)
+f.sendline(pw.hex().encode())
+f.interactive()
+```
 ### PRG
 
 ``server.py``
