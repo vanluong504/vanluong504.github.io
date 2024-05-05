@@ -422,6 +422,16 @@ if check == password.hex():
     print('flag:', FLAG)
 ```
 
+Để lấy được flag thì chúng ta cần phải nhập đúng passwd sau khi giải mã ``c_p``
+
+Passwd được mã hóa bằng AES và khi có độ dài > 4096 byte (256-block) thì mới được thực thi tiếp
+
+```python
+if check == password.hex():
+    print('flag:', "greyctf:::::::")
+```
+
+
 ### PRG
 
 ``server.py``
@@ -551,4 +561,94 @@ if __name__ == "__main__":
 #     [1,1,1,1,1,1,1,1,0,1,1,1,1,0,0,1,0,1,1,1,0,0,0,0,1,1,1,0,1,1,0,0,1,0,1,1,1,1,1,0,0,1,0,1,0,0,1,0,1,0,0,0,1,1,0,1,1,0,1,1,1,1,0,1],
 #     [0,1,1,0,1,1,0,1,0,1,1,1,0,0,1,0,0,0,1,1,0,0,0,1,1,0,1,0,1,1,1,1,0,1,0,0,1,0,0,1,0,1,0,1,0,1,1,1,0,0,1,1,1,1,1,0,1,1,0,1,0,1,1,0]
 # ]
+```
+
+Đến với chal này chúng ta phải đúng 100 lần liên tiếp thì server mới trả về flag.
+
+Trước hết, x, r, k được khởi tạo ngẫu nhiên 64 bit, chúng ta có pt dưới
+
+$$
+x(\mod 2)\mapsto\begin{cases}
+Ax+r,&i\equiv0\pmod3 \\
+Ax+k,&i\equiv1\pmod3 \\
+Ax+r+k,&i\equiv2\pmod3, \\
+\end{cases}
+$$
+
+Tạo vector $v = (v_1, \dots,v_{64}) \in F_2^{64}$ và tổng của v là $s(v)=\sum_i v_i$, các bit đầu ra $b_1, b_2, ..., b_{123}$ thỏa mãn phương trình
+
+$$
+\begin{matrix}
+(x) = b_1 \\
+(Ax+r) = b_2 \\
+(A(Ax+r)+k) = b_3 \\
+\vdots
+\end{matrix}
+$$
+
+Ta có thể thấy vế trái có thể biểu diễn qua các biến $x_1,\ldots,x_{64},r_1,\ldots,r_{64},k_1,\ldots,k_{64},$
+
+Cuối cùng nó là hệ 128 pt với 192 ẩn, rất dễ dàng thực thi với sage.
+
+Python Implementation: 
+
+```python
+from pwn import *
+from sage.all import *
+from param import A
+from tqdm import *
+
+A = A
+F = GF(2)
+
+def X(i): return vector(F, [0 for _ in range(i)] + [1] + [0 for _ in range(3*64-i-1)])
+def R(i): return vector(F, [0 for _ in range(64+i)] + [1] + [0 for _ in range(2*64-i-1)])
+def K(i): return vector(F, [0 for _ in range(2*64+i)] + [1] + [0 for _ in range(64-i-1)])
+Z = vector(F, [0 for _ in range(3*64)])
+
+M = []
+vs = []
+for i in tqdm(range(64)):
+    v = vector(F, X(i))
+    vs.append(v)
+M.append(sum(vs))
+
+for n in tqdm(range(16*8-1)):
+    if n%3 == 0: RK = R
+    elif n%3 == 1: RK = K
+    else: RK = lambda i: R(i)+K(i)
+
+    new_vs = []
+    for i in tqdm(range(64)):
+        new_v = RK(i)
+        for j in range(64):
+            new_v += A[i][j] * vs[j]
+        new_vs.append(new_v)
+    M.append(sum(new_vs))
+    vs = new_vs
+M = Matrix(F, M)
+
+def bytes_to_bits(s):
+    return list(map(int, ''.join(format(x, '08b') for x in s)))
+
+def bits_to_bytes(b):
+    return bytes(int(''.join(map(str, b[i:i+8])), 2) for i in range(0, len(b), 8))
+
+r = remote('challs.nusgreyhats.org', 35101, level = 'debug')
+r.recvuntil(b'Output: ')
+for i in tqdm(range(100)):
+    L = r.recvline()
+    print(L)
+    v = vector(F, bytes_to_bits(bytes.fromhex(L[:-1].decode())))
+    try:
+        M.solve_right(v)
+        result = b'1\n'
+    except:
+        result = b'0\n'
+    r.send(result)
+    print(result)
+    if i < 99:
+        r.recvuntil(b'Output: ')
+    else:
+        r.recvline()
 ```
