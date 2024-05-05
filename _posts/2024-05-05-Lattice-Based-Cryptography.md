@@ -249,14 +249,18 @@ Hidden number problem (HNP) được giới thiệu nhằm mục đích chứng 
 
 [1] _practical improvements on bkz algorithm pqc2022_, https://csrc.nist.gov/csrc/media/Events/2022/fourth-pqc-standardization-conference/documents/papers/practical-improvements-on-bkz-algorithm-pqc2022.pdf .
 
-[2]
+[2] _mr.quoc_, https://hackmd.io/@nomorecaffeine
 
-[3]
+[3] _Survey: Lattice Reduction Attacks on RSA_ ,https://www.davidwong.fr/papers/david_wong_rsa_lll_boneh_durfee__2015.pdf
 
-[4]
+[4] _Hoffstein 2014 Introduction Mathematical Crypto_, https://iacr.org/books/2014_sp_Hoffstein_IntroductionMathematicalCrypto.pdf
 
-[5]
+[5] _Lenstra Lenstra Lovász wiki_, https://en.wikipedia.org/wiki/Lenstra%E2%80%93Lenstra%E2%80%93Lov%C3%A1sz_lattice_basis_reduction_algorithm
 
-[6]
+[6] _A Decade of Lattice Cryptography (Chris Peikert)_, https://eprint.iacr.org/2015/939.pdf
 
-[7]
+[7] _Lattice Attacks on NTRU and LWE: A History of Refinements_, https://eprint.iacr.org/2021/799
+
+[8] _Lattice-based Cryptography_, https://cims.nyu.edu/~regev/papers/pqc.pdf
+
+[9] _Basic Lattice Cryptography: Encryption and Fiat-Shamir Signatures_, https://drive.google.com/file/d/1JTdW5ryznp-dUBBjN12QbvWz9R41NDGU/view
