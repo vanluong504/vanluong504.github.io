@@ -1,5 +1,5 @@
 ---
-title: Lattice Based Problems
+title: Lattice Based Cryptography
 date: 2024-05-05 20-00-00
 categories: [Cryptography]
 tags: [Cryptography, Learning]
@@ -10,6 +10,32 @@ math: true
 ## Lattice
 
 Các cuộc tấn công mà chúng tôi sẽ mô tả sau cả hai đều sử dụng thuật toán giảm cơ sở mạng tinh thể Lenstra-Lenstra-Lovasz. Do đó, chúng ta cần phải hiểu mạng tinh thể là gì và tại sao thuật toán LLL này lại hữu ích như vậy. Hãy suy nghĩ về Lattices như Vector Spaces. Hãy tưởng tượng một không gian vectơ đơn giản của hai vector. Bạn có thể cộng chúng lại với nhau, nhân chúng với vô hướng (giả sử R) và nó kéo dài một không gian vector.
+
+Cho $v_1, v_2, ...,v_n \in R^{m}$ tập hợp các vector độc lập tuyến tính. Lattice L được tạo bởi  $v_1, v_2, ...,v_n$ là tổ hợp tuyến tính với các hệ số trong tập hợp Z
+
+$$L = \{\alpha_1v_1 + \alpha_2v_2 + ... +\alpha_nv_n : \alpha_1, \alpha_2,...,\alpha_n \in Z \}$$
+
+Giả sử $v_1, v_2, ...,v_n$ là cơ sở cho mạng tinh thể L và $w_1, w_2, ..., w_n \in L$ là một tập hợp các vectơ khác trong L. Giống như chúng ta đã làm cho các không gian vector, chúng ta có thể viết được như sau
+
+$$
+\begin{cases}
+w_1 = \alpha_{1_1}v_1 + \alpha_{1_2} + ... + \alpha_{1_n}v_n \\
+w_2 = \alpha_{2_1}v_1 + \alpha_{2_2} + ... + \alpha_{2_n}v_n \\ 
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \vdots \\
+w_n = \alpha_{n_1}v_1 + \alpha_{n_2} + ... + \alpha_{n_n}v_n
+\end{cases}
+$$
+
+Ta có lattice 
+
+$$
+B = \begin{pmatrix}
+\alpha_{1_1} & \alpha_{1_2} & \dots & \alpha_{1_n} \\
+\alpha_{2_1} & \alpha_{2_2} & \dots & \alpha_{2_n} \\
+\vdots & \vdots & \ddots & \vdots \\
+\alpha_{n_1} & \alpha_{n_2} & \dots & \alpha_{n_n}
+\end{pmatrix}
+$$
 
 Một số loại Lattice Based chính:
 
@@ -26,6 +52,19 @@ Một số loại Lattice Based chính:
  - NewHope: NewHope là một hệ thống mã hóa đối xứng dựa trên cơ sở bài toán tìm một vector ngắn nhất trong một mạng lưới số học đa chiều. Nó được phát triển bởi Erdem Alkim, Léo Ducas, Thomas Pöppelmann và Peter Schwabe vào năm 2015.
 
  - FHEW (Fully Homomorphic Encryption with Weakened Keys): FHEW là một hệ thống mã hóa đối xứng dựa trên cơ sở bài toán tìm một vector ngắn nhất trong một mạng lưới số học đa chiều. Nó được sử dụng để tạo ra các hệ thống mã hóa đa tầng hoàn toàn đồng nhất, cho phép tính toán trên dữ liệu được mã hóa mà không cần giải mã trước.
+
+### Lattice Problems
+#### 1. Shortest Vector Problem (SVP)
+
+Shortest Vector Problem (SVP) là một trong những bài toán quan trọng nhất trong lý thuyết lattice, nó yêu cầu tìm kiếm vector ngắn nhất trong một lattice cho trước. Cụ thể hơn, cho một lattice L được tạo bởi một tập các vector linearly independent, SVP yêu cầu tìm một vector $v \in L$ sao cho độ dài của v là nhỏ nhất có thể.
+
+![image](/assets/image/Lattice/SVP.png)
+
+#### 2. Closest Vector Problem (CVP)
+
+Closest Vector Problem (CVP) là một trong những bài toán quan trọng nhất trong lý thuyết lattice, mục tiêu của CVP là tìm điểm trên lưới gần nhất với vector mục tiêu. Cho vectơ $w \in R^m$ không thuộc L, tìm vectơ $v \in L$ gần w nhất, tức là tìm vectơ $v \in L$ sao cho |v - w| được giảm thiểu.
+
+![image](/assets/image/Lattice/CVP.png)
 
 ### Gram Schmidt
 
@@ -160,6 +199,24 @@ def Gauss(v1, v2):
 c, d = Gauss(a,b)
 c.dot_product(d)
 ```
+### Lenstra Lenstra Lovász Lattice Reduction Algorithm (LLL   )
+
+Thuật toán LLL (Lenstra-Lenstra-Lovász) là một trong những thuật toán phổ biến nhất để giải bài toán tìm vector ngắn nhất đầu tiên (SVP) trong hệ thống mã hóa dựa trên lưới (lattice-based cryptography). Thuật toán này được đặt tên theo tên ba nhà toán học là A.K. Lenstra, H.W. Lenstra, và L. Lovász, người đã đề xuất nó vào năm 1982.
+
+![image](/assets/image/Lattice/LLL.png)
+
+Thuật toán LLL hoạt động trên một ma trận cơ sở của lưới và có hai bước chính:
+
+ - Bước 1: Thuật toán thực hiện một số phép biến đổi trên ma trận cơ sở của lưới để đưa nó về dạng “thuận tiện” để tính toán. Trong quá trình này, thuật toán thực hiện một số phép biến đổi trên các hàng của ma trận cơ sở để đưa các giá trị của ma trận Gram về gần đường chéo chính. Việc làm này giúp tăng hiệu quả tính toán của thuật toán.
+
+ - Bước 2: Sau khi ma trận cơ sở của lưới đã được đưa về dạng thuận tiện, thuật toán tiến hành tìm kiếm vector ngắn nhất trong lưới. Việc tìm kiếm này được thực hiện bằng cách duyệt qua từng cột của ma trận cơ sở và thay đổi các phần tử của cột đó để giảm giá trị của vector ngắn nhất được tìm thấy trước đó. Quá trình tìm kiếm được tiếp tục cho đến khi không thể tìm được vector ngắn hơn nữa.
+
+![image](/assets/image/Lattice/LLL_ATH.png)
+
+
+### Block Korkin-Zolotarev Lattice Reduction Algorithm (BKZ)
+
+![image](/assets/image/Lattice/BKZ.png)
 
 ## Coppersmith’s Method
 
@@ -173,3 +230,19 @@ c.dot_product(d)
 
 Hidden number problem (HNP) được giới thiệu nhằm mục đích chứng minh kết quả về tính bảo mật bit của giao thức trao đổi khóa Diﬀie-Hellman. Ở mức độ cao, HNP xử lý việc khôi phục secret “hidden” number dựa trên một số kiến thức về mối quan hệ tuyến tính của nó. Do đó, nó đương nhiên tìm thấy tính hữu ích hơn nữa trong phân tích mật mã và đặc biệt là side-channel attacks.
 
+**to be continued**
+## Reference
+
+[1] _practical improvements on bkz algorithm pqc2022_, https://csrc.nist.gov/csrc/media/Events/2022/fourth-pqc-standardization-conference/documents/papers/practical-improvements-on-bkz-algorithm-pqc2022.pdf .
+
+[2]
+
+[3]
+
+[4]
+
+[5]
+
+[6]
+
+[7]
