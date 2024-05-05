@@ -15,7 +15,7 @@ Các cuộc tấn công mà chúng tôi sẽ mô tả sau cả hai đều sử d
 
 Đây là một thuật toán để trực chuẩn hóa các vector cho trước, trong một không gian tích trong với đầu vào là một tập hợp hữu hạn các vector độc lập tuyến tính với nhau. Và tạo ra một tập hợp các vector khác đôi một vuông goc với với nhau.
 
-![gif](https://upload.wikimedia.org/wikipedia/commons/e/ee/Gram-Schmidt_orthonormalization_process.gif)
+![gif](/assets/image/Lattice/Gram-Schmidt.gif)
 
 Giả sử ta có 4 vector sau
 
