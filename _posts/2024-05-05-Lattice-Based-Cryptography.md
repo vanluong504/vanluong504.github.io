@@ -234,6 +234,8 @@ Thuật toán LLL hoạt động trên một ma trận cơ sở của lưới v�
 |:--|
 |_Hình: BKZ_|
 
+### Learning With Errors on Rings (Ring-LWE)
+
 ## Coppersmith’s Method
 
 ## Knapsack Problem
