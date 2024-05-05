@@ -66,6 +66,14 @@ Closest Vector Problem (CVP) là một trong những bài toán quan trọng nh�
 
 ![image](/assets/image/Lattice/CVP.png)
 
+#### 3. Shortest Independent Vectors Problem (SIVP)
+
+Trong cơ sở $B \in R^{n.n}$, chúng ta sẽ tìm thấy n vector độc lập tuyến tính $S = [s_1, s_2, ..., s_n]$ ($s_i \in L(B) = {Bx:x \in Z^n})$ 
+
+$max||v_i|| \le max||b_i||$, $||x|| = \sqrt{x_1^2 + x_2^2 +...+ x_n^2}$
+
+![image](/assets/image/Lattice/SIVP.png)
+
 ### Gram Schmidt
 
 Đây là một thuật toán để trực chuẩn hóa các vector cho trước, trong một không gian tích trong với đầu vào là một tập hợp hữu hạn các vector độc lập tuyến tính với nhau. Và tạo ra một tập hợp các vector khác đôi một vuông goc với với nhau.
