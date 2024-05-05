@@ -230,13 +230,11 @@ Thuật toán LLL hoạt động trên một ma trận cơ sở của lưới v�
 
 ### Block Korkin-Zolotarev Lattice Reduction Algorithm (BKZ)
 
-![image](/assets/image/Lattice/BKZ.png)
+|![image](/assets/image/Lattice/BKZ.png)|
+|:--|
+|_Hình: BKZ_|
 
 ## Coppersmith’s Method
-
-### Known modulus
-
-### Any modulus
 
 ## Knapsack Problem
 
