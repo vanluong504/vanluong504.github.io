@@ -242,7 +242,7 @@ Thuật toán LLL hoạt động trên một ma trận cơ sở của lưới v�
 
 Hidden number problem (HNP) được giới thiệu nhằm mục đích chứng minh kết quả về tính bảo mật bit của giao thức trao đổi khóa Diﬀie-Hellman. Ở mức độ cao, HNP xử lý việc khôi phục secret “hidden” number dựa trên một số kiến thức về mối quan hệ tuyến tính của nó. Do đó, nó đương nhiên tìm thấy tính hữu ích hơn nữa trong phân tích mật mã và đặc biệt là side-channel attacks.
 
-**to be continued**
+## to be continued
 ## Reference
 
 [1] _practical improvements on bkz algorithm pqc2022_, https://csrc.nist.gov/csrc/media/Events/2022/fourth-pqc-standardization-conference/documents/papers/practical-improvements-on-bkz-algorithm-pqc2022.pdf .
