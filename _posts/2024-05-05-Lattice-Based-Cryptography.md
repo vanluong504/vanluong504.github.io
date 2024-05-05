@@ -62,7 +62,7 @@ Một số loại Lattice Based chính:
 
 #### 2. Closest Vector Problem (CVP)
 
-Closest Vector Problem (CVP) là một trong những bài toán quan trọng nhất trong lý thuyết lattice, mục tiêu của CVP là tìm điểm trên lưới gần nhất với vector mục tiêu. Cho vectơ $w \in R^m$ không thuộc L, tìm vectơ $v \in L$ gần w nhất, tức là tìm vectơ $v \in L$ sao cho $|$ v - w $|$ được giảm thiểu.
+Closest Vector Problem (CVP) là một trong những bài toán quan trọng nhất trong lý thuyết lattice, mục tiêu của CVP là tìm điểm trên lưới gần nhất với vector mục tiêu. Cho vectơ $w \in R^m$ không thuộc L, tìm vectơ $v \in L$ gần w nhất, tức là tìm vectơ $v \in L$ sao cho độ dài v - w được giảm thiểu.
 
 ![image](/assets/image/Lattice/CVP.png)
 
@@ -163,10 +163,10 @@ V.gram_schmidt()[0][3][1].n(digits=5)
 Đây là thuật toán để đưa hai cơ sở thành một cơ sở có các vector ngắn nhất và gần như trực giao với nhau
 
 
-- Bài toán vectơ ngắn nhất (SVP) - The ``Shortest Vector Problem``: tìm vectơ khác 0 ngắn nhất trong mạng L. Nói cách khác, tìm vectơ khác 0 trong $v \in L$ sao cho $|v|$ là nhỏ nhất.
+- Bài toán vectơ ngắn nhất (SVP) - The ``Shortest Vector Problem``: tìm vectơ khác 0 ngắn nhất trong mạng L. Nói cách khác, tìm vectơ khác 0 trong $v \in L$ sao cho độ dài của v là nhỏ nhất.
 
 
-- Bài toán vectơ gần nhất (CVP) - The ``Closest Vector Problem``: Cho vectơ $w \in R^m$ không thuộc L, tìm vectơ $v \in L$ gần w nhất, tức là tìm vectơ $v \in L$ sao cho $|v - w|$ được giảm thiểu.
+- Bài toán vectơ gần nhất (CVP) - The ``Closest Vector Problem``: Cho vectơ $w \in R^m$ không thuộc L, tìm vectơ $v \in L$ gần w nhất, tức là tìm vectơ $v \in L$ sao cho độ dài v - w được giảm thiểu.
 
 **Algorithm for Gaussian Lattice Reduction**
 
