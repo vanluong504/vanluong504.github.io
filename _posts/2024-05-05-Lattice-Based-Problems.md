@@ -72,6 +72,7 @@ $$_S = {\frac{y_1}{|y_1|}, \frac{y_2}{|y_2|}, ..., \frac{y_n}{|y_n|}}$$
 
 
 Sagemath Implementation:
+
 ``solved_1.sage``
 ```
 v1 = vector([4, 1, 3, -1])
@@ -99,6 +100,47 @@ V = matrix(ZZ, [v1, v2, v3, v4])
 V.gram_schmidt()
 
 V.gram_schmidt()[0][3][1].n(digits=5)
+```
+### Gaussian Reduction
+
+![image](/assets/image/Lattice/gau.png)
+
+Đây là thuật toán để đưa hai cơ sở thành một cơ sở có các vector ngắn nhất và gần như trực giao với nhau. 
+
+Bài toán vectơ ngắn nhất - The ``Shortest Vector Problem`` (SVP): tìm vectơ khác 0 ngắn nhất trong mạng L. Nói cách khác, tìm vectơ khác 0 trong $v \in L$ sao cho |v| là nhỏ nhất.
+
+Bài toán vectơ gần nhất (CVP) - The ``Closest Vector Problem``: Cho vectơ $w \in R^m$ không thuộc L, tìm vectơ $v \in L$ gần w nhất, tức là tìm vectơ $v \in L$ sao cho |v - w| được giảm thiểu.
+
+**Algorithm for Gaussian Lattice Reduction**
+
+```
+Loop
+   (a) If ||v2|| < ||v1||, swap v1, v2
+   (b) Compute m = ⌊ v1∙v2 / v1∙v1 ⌉
+   (c) If m = 0, return v1, v2
+   (d) v2 = v2 - m*v1
+Continue Loop
+```
+
+Challenge [Gaussian Reduction](https://cryptohack.org/challenges/maths/)
+
+Python Implementation:
+
+```python
+a = vector([846835985, 9834798552])
+b = vector([87502093, 123094980])
+
+def Gauss(v1, v2):
+    while True:
+        if v2.norm() < v1.norm():
+            v1, v2 = v2, v1
+        m =  v1.dot_product(v2) // v1.dot_product(v1)
+        if m == 0:
+            return v1, v2
+        v2 = v2 - m*v1
+
+c, d = Gauss(a,b)
+c.dot_product(d)
 ```
 
 ## Coppersmith’s Method
