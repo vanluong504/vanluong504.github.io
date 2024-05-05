@@ -58,13 +58,17 @@ Một số loại Lattice Based chính:
 
 - Shortest Vector Problem (SVP) là một trong những bài toán quan trọng nhất trong lý thuyết lattice, nó yêu cầu tìm kiếm vector ngắn nhất trong một lattice cho trước. Cụ thể hơn, cho một lattice L được tạo bởi một tập các vector linearly independent, SVP yêu cầu tìm một vector $v \in L$ sao cho độ dài của v là nhỏ nhất có thể.
 
-![image](/assets/image/Lattice/SVP.png)
+|![image](/assets/image/Lattice/SVP.png)|
+|:--|
+|_Hình 1: SVP_|
 
 #### 2. Closest Vector Problem (CVP)
 
 Closest Vector Problem (CVP) là một trong những bài toán quan trọng nhất trong lý thuyết lattice, mục tiêu của CVP là tìm điểm trên lưới gần nhất với vector mục tiêu. Cho vectơ $w \in R^m$ không thuộc L, tìm vectơ $v \in L$ gần w nhất, tức là tìm vectơ $v \in L$ sao cho độ dài v - w được giảm thiểu.
 
-![image](/assets/image/Lattice/CVP.png)
+|![image](/assets/image/Lattice/CVP.png)|
+|:--|
+|_Hình 2: CVP_|
 
 #### 3. Shortest Independent Vectors Problem (SIVP)
 
@@ -72,7 +76,9 @@ Trong cơ sở $B \in R^{n.n}$, chúng ta sẽ tìm thấy n vector độc lập
 
 $max(v_i) \le max(b_i)$, $(x) = \sqrt{x_1^2 + x_2^2 +...+ x_n^2}$
 
-![image](/assets/image/Lattice/SIVP.png)
+|![image](/assets/image/Lattice/SIVP.png)|
+|:--|
+|_Hình 3: SIVP_|
 
 ### Gram Schmidt
 
