@@ -225,8 +225,6 @@ Thuật toán LLL hoạt động trên một ma trận cơ sở của lưới v�
 
  - Bước 2: Sau khi ma trận cơ sở của lưới đã được đưa về dạng thuận tiện, thuật toán tiến hành tìm kiếm vector ngắn nhất trong lưới. Việc tìm kiếm này được thực hiện bằng cách duyệt qua từng cột của ma trận cơ sở và thay đổi các phần tử của cột đó để giảm giá trị của vector ngắn nhất được tìm thấy trước đó. Quá trình tìm kiếm được tiếp tục cho đến khi không thể tìm được vector ngắn hơn nữa.
 
-![image](/assets/image/Lattice/LLL_ATH.png)
-
 #### Mã giả thuật toán
 
 ```text
