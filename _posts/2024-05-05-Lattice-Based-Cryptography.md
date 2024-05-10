@@ -227,6 +227,51 @@ Thuật toán LLL hoạt động trên một ma trận cơ sở của lưới v�
 
 ![image](/assets/image/Lattice/LLL_ATH.png)
 
+#### Mã giả thuật toán
+
+```text
+# https://en.wikipedia.org/wiki/Lenstra%E2%80%93Lenstra%E2%80%93Lov%C3%A1sz_lattice_basis_reduction_algorithm
+
+INPUT
+    a lattice basis b1, b2, ..., bn in Zm
+    a parameter δ with 1/4 < δ < 1, most commonly δ = 3/4
+PROCEDURE
+    B* <- GramSchmidt({b1, ..., bn}) = {b1*, ..., bn*};  and do not normalize
+    μi,j <- InnerProduct(bi, bj*)/InnerProduct(bj*, bj*);   using the most current values of bi and bj*
+    k <- 2;
+    while k <= n do
+        for j from k−1 to 1 do
+            if |μk,j| > 1/2 then
+                bk <- bk − ⌊μk,j⌉bj;
+               Update B* and the related μi,j's as needed.
+               (The naive method is to recompute B* whenever bi changes:
+                B* <- GramSchmidt({b1, ..., bn}) = {b1*, ..., bn*})
+            end if
+        end for
+        if InnerProduct(bk*, bk*) > (δ − μ2k,k−1) InnerProduct(bk−1*, bk−1*) then
+            k <- k + 1;
+        else
+            Swap bk and  bk−1;
+            Update B* and the related μi,j's as needed.
+            k <- max(k−1, 2);
+        end if
+    end while
+    return B the LLL reduced basis of {b1, ..., bn}
+OUTPUT
+    the reduced basis b1, b2, ..., bn in Zm
+```
+
+#### Ứng dụng
+
+Cho n số thực $a_1, a_2, ..., a_n$, tìm xấp xỉ tuyến tính của n số hay là tìm n số $m_i$ sao cho
+
+$$\sum\limits_{i=1}^{n }m_ia_i = 0$$
+
+Chúng ta có thể xây dựng một ma trận 
+
+$$
+A = \left[ \begin{matrix} 1   & 0 & 0     & \cdots & 0 & a_1     \\ 0   & 1  & 0    & \cdots & 0 & a_2  \\ 0   & 0   & 1   & \cdots & 0 & a_3 \\\vdots & \vdots & \vdots & \ddots & \vdots \\ 0   & 0   &0   & \cdots & 1 & a_n     \\ \end{matrix} \right]
+$$
 
 ### Block Korkin-Zolotarev Lattice Reduction Algorithm (BKZ)
 
