@@ -275,7 +275,7 @@ Nếu ``m1, m2`` là 1 cặp collision thì
 
 $$MD5(m_1||t_1) = MD5(m_2||t_2)$$
 
-Vậy nên nếu ta có trước 1 cặp collisions ta có thể khiến cho $(m_1||t_1)$ là 1 số nguyên tố và $(m_2||t_2)$ không phải số nguyên tố
+Vậy nên nếu ta có trước 1 cặp collisions ta có thể khiến cho $\text{(m1||t1)}$ là 1 số nguyên tố và $\text{(m2||t2)}$ không phải số nguyên tố 
 
 Python Implementation: 
 
