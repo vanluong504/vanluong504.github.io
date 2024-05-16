@@ -4,7 +4,7 @@ _Visit website:_ https://vanluongkma.github.io
 
 ![gif](/assets/image/vanluongkma_gif.gif)
 
-<figure style="text-align: center;">
+
+<div style="display: flex; justify-content: center;">
   <img src="/assets/image/vanluongkma_gif.gif" alt="gif" style="max-width: 100%;">
-  <figcaption>DEMO WEBSITE</figcaption>
-</figure>
+</div>
