@@ -5,6 +5,6 @@ _Visit website:_ https://vanluongkma.github.io
 ![gif](/assets/image/vanluongkma_gif.gif)
 
 
-<div style="display: flex; justify-content: center;">
+<p align="center">
   <img src="/assets/image/vanluongkma_gif.gif" alt="gif" style="max-width: 100%;">
-</div>
+</p>
