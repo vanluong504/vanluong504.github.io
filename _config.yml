@@ -16,7 +16,7 @@ timezone: Asia/Saigon
 
 title: vanluongkma # the main title
 
-tagline: KCSC # it will display as the sub-title
+tagline: Member of KCSC # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   A minimal, responsive and feature-rich Jekyll theme for technical writing.
