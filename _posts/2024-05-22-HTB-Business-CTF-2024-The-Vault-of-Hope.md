@@ -7,7 +7,7 @@ image: /assets/image/CTF/htb-business-ctf-2024-the-vault-of-hope/logo.png
 math: true
 ---
 
-### Not that random
+### Not that random [Medium]
 
 ```python
 from Crypto.Util.number import *
@@ -116,8 +116,122 @@ if __name__ == '__main__':
     main()
 ```
 
+Đến với bài này, chúng ta sẽ cùng đi phân tích nhé.
 
-### Blessed
+Như trên source của bài, nó cho ta 5 option với mỗi option có chức năng như sau:
+
+```text
+MENU = '''
+Make a choice:
+
+1. Buy flag (-500 coins)
+2. Buy hint (-10 coins)
+3. Play (+5/-10 coins)
+4. Print balance (free)
+5. Exit'''
+```
+
+Ở option đầu tiên cũng là option duy nhất để server trả về flag cho ta nhưng với điều kiện tiên quyết là chúng ta phải có 500 coins (hiện tại đang có 100 coins)
+
+Option 2 ta có như sau:
+
+```python
+def keyed_hash(key, inp):
+    return sha256(key + inp).digest()
+
+def custom_hmac(key, inp):
+    return keyed_hash(keyed_hash(key, b"Improving on the security of SHA is easy"), inp) + keyed_hash(key, inp)
+
+def impostor_hmac(key, inp):
+    return get_random_bytes(64)
+
+def buy_hint(self):
+    self.player_money -= 10
+    hash_input = bytes.fromhex(input("Enter your input in hex :: "))
+    if random.getrandbits(1) == 0:
+        print("Your output is :: " + custom_hmac(self.secret_key, hash_input).hex())
+    else:
+        print("Your output is :: " + impostor_hmac(self.secret_key, hash_input).hex())
+```
+ - Như bạn có thể thấy chúng ta phải nhập vào một đoạn hex
+
+ - Hàm ``buy_hint()`` sẽ random giữa 0, 1 để sử dụng ``custom_hmac(key, inp)`` và ``impostor_hmac(key, inp)`` 
+
+ - Nếu làm hàm ``impostor_hmac(key, inp)`` thì mỗi lần chúng ta sẽ nhận được 64 bytes random
+
+ - Còn với hàm ``custom_hmac(key, inp)`` thì ta thấy phần ``keyed_hash(key, b"Improving on the security of SHA is easy")`` này luôn cố định nên nếu chúng ta biết được nó và input thì ta hoàn đoán có thể đoán đó là hàm ``custom`` hay ``impostor``.
+
+Đến với options 3, ta bắt đầu vào cuộc chơi, nếu đúng sẽ được 5 coin và sai thì sẽ trừ 10 coins
+
+```python
+def play(self):
+    my_bit = random.getrandbits(1)
+    my_hash_input = get_random_bytes(32)
+    print("I used input " + my_hash_input.hex())
+    if my_bit == 0:
+        my_hash_output = custom_hmac(self.secret_key, my_hash_input)
+    else:
+        my_hash_output = impostor_hmac(self.secret_key, my_hash_input)
+    print("I got output " + my_hash_output.hex())
+    answer = int(input("Was the output from my hash or random? (Enter 0 or 1 respectively) :: "))
+    if answer == my_bit:
+        self.player_money += 5
+        success("Lucky you!")
+    else:
+        self.player_money -= 10
+        fail("Wrong!")
+```
+
+ - Ta thấy hàm này có thể chả về ngầu nhiên ``custom`` hoặc là ``impostor``
+
+ - Chúng ta chỉ cần gửi đi ``b"Improving on the security of SHA is easy"`` thì dễ dàng có lại ``keyed_hash(key, b"Improving on the security of SHA is easy")``
+ 
+ - Tiếp đó so sánh ``hash`` mà server trả về với hash của mình tính nếu nó thỏa mãn thì gửi lại số 0, nêu không thỏa mã thì gửi số 1.
+
+Options 4 sẽ show điểm coins hiện tại chúng ta có
+
+Và option cuối cùng là exit khỏi server
+
+Python Implementation:
+
+```python
+from Crypto.Util.number import *
+from pwn import *
+from tqdm import tqdm
+from hashlib import *
+
+# f = connect("83.136.248.97", 35702, level = 'debug')
+f = process(["python3", "server.py"])
+
+f.recvline()
+f.sendlineafter(b"Option: ", b"2")
+f.recvuntil(b"Enter your input in hex :: ")
+f.sendline((b"Improving on the security of SHA is easy").hex())
+f.recvuntil(b"Your output is :: ")
+
+hash_key = bytes.fromhex(f.recvline()[:-1].decode()[-64:])
+print(hash)
+
+def keyed_hash(key, inp):
+    return sha256(key + inp).digest()
+
+for i in tqdm(range(100)):
+    f.sendlineafter(b"Option: ", b"3")
+    f.recvuntil(b"I used input ")
+    inp = bytes.fromhex(f.recvline()[:-1].decode())
+    f.recvuntil(b"I got output ")
+    out = bytes.fromhex(f.recvline()[:-1].decode())
+    if out.startswith(keyed_hash(hash_key, inp)):
+        f.sendlineafter(b":: ", str(0).encode())
+    else:
+        f.sendlineafter(b":: ", str(1).encode())
+
+f.sendlineafter(b"Option: ", b"4")
+f.sendlineafter(b"Option: ", b"1")
+f.interactive()
+```
+
+### Blessed [Hard]
 
 ```python
 import json
@@ -314,4 +428,4 @@ if __name__ == '__main__':
     main()
 ```
 
-
+Hi nfjd vn
