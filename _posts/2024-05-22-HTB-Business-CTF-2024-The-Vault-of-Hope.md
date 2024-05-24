@@ -428,4 +428,13 @@ if __name__ == '__main__':
     main()
 ```
 
-Hi nfjd vn
+Bài này cần khá nhiều kiến thức về 
+
+ - Elliptic Curve
+ - LLL lattice reduction
+ - Modular arithmetic
+ - Pairing-based cryptography
+ - Zero-knowlegde proofs
+ - BLS signatures
+ - BLS12-381 pairing-friendly elliptic curves
+ - EC-LCG
