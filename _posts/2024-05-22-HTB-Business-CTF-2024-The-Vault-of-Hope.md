@@ -462,7 +462,7 @@ from sage.all import EllipticCurve, GF, identity_matrix, PolynomialRing, Sequenc
 
 def get_process():
     if len(sys.argv) == 1:
-        return process(['python3', '../challenge/server.py'])
+        return process(['python3', 'path/to/server.py'])
 
     host, port = sys.argv[1].split(':')
     return remote(host, port)
