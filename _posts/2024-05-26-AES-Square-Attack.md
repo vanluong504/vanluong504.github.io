@@ -110,8 +110,24 @@ Lưu ý rằng không chỉ byte đầu, mà toàn bộ các byte còn lại cũ
 
 ### AES 4 Round
 
+Bây giờ ta hãy xem qua các bước của AES 4 Round:
+
+![image](/assets/image/AES/square_attack/SQUARE-09.jpg)
+
+Ta có thể tìm lại 1 byte ở vị trí i theo các cách sau
+ - Generate ``𝛬-set`` với active index là i, sau đó encrypt toàn bộ các phần tử trong set. Ta gọi tập các phần tử nhận được là ``enc-𝛬-set``
+ - Đoán ``roundKey[4][i] = guess`` là một giá trị từ 0-255
+ - Với mỗi ``ciphertext`` trong ``enc-𝛬-set``, ta sẽ thay đổi ``ciphertext[i] = ciphertext[i] ^ roundKey[i]``. Sau đó, ciphertext mới của chúng ta sẽ đi qua 2 bước là InvShiftRows và InvSubBytes. Ta gọi tập các phần tử nhận được lúc này là ``enc2-𝛬-set`` 
+ - Kiểm tra xem ``enc2-𝛬-set`` của chúng ta có thỏa mãn tính chất (*) hay không. Nếu có, guess có thể chính là giá trị ta đang cần tìm.
+ - Nếu có nhiều giá trị guess thỏa mãn, ta nên regenerate ``𝛬-set`` cho đến khi chỉ tìm được duy nhất 1 giá trị thỏa mãn
+ 
+Từ đó, ta có thể tìm được roundKey thứ 4 của Cipher, và có thể reverse được Key mà Cipher đang sử dụng.
+
 ### AES 5 Round
 
+![image](/assets/image/AES/square_attack/SQUARE-12.jpg)
+
+Chúng ta có thể đoán 4 bytes cuối cùng ``round key`` thứ 4.
 ### Reference
 
 [1] _https://www.davidwong.fr/blockbreakers/square.html_
