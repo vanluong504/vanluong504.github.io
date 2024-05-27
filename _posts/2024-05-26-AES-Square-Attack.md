@@ -127,7 +127,27 @@ Từ đó, ta có thể tìm được roundKey thứ 4 của Cipher, và có th�
 
 ![image](/assets/image/AES/square_attack/SQUARE-12.jpg)
 
-Chúng ta có thể đoán 4 bytes cuối cùng ``round key`` thứ 4.
+Chúng ta có thể đoán 4 byte của ``roundKey`` cuối cùng để ``reverse stat``e cho đến cuối vòng thứ 4 , ngay sau khi XOR nó với ``roundKey`` cuối, chúng ta cũng có thể đoán 4 byte của ``roundKey`` cuối để tiếp tục các byte liên quan và kết thúc bằng việc thực hiện cùng một cuộc tấn công như trước. Tổng cộng, chúng ta phải đoán 8 byte khóa phụ để bắt đầu cuộc tấn công, đây là một lượng khá lớn.
+
+![image](/assets/image/AES/square_attack/SQUARE-13.jpg)
+
+việc đoán 8 bytes để tìm được 1 bytes ở roundKey thứ 5 tốn quá nhiều thời gian. Vì thế, ta có thể sử dụng ý tưởng sau: Do MixColumns là hàm tuyến tính dựa trên các cột của input, nên ta có thể viết lại ciphertext khi vừa hoàn thành round 4 như sau
+
+$$
+\begin{align*}
+&\text{MixColumns}(\text{state}) \oplus \text{RoundKey} \\
+= &\text{MixColumns}(\text{state}) \oplus \text{MixColumns}(\text{MixColumnsInv}(\text{RoundKey})) \\
+= &\text{MixColumns}(\text{state } \oplus \text{MixColumnsInv}(\text{RoundKey}))
+\end{align*}
+$$
+
+
+Do đó, ta chỉ cần đoán 4 bytes ở ``roundKey`` cuối, cùng với 1 bytes ở ``roundKey `` thứ 4 để tìm được 1 byte ở ``roundKey`` thứ 5, tổng cộng là 5 bytes. Việc này giúp giảm đáng kể khối lượng công việc cần làm để recover key, nhưng vẫn tốn khá nhiều thời gian.
+
+![image](/assets/image/AES/square_attack/SQUARE-14.jpg)
+
+Cuộc tấn công này đòi hỏi nhiều nguồn tài nguyên, để cover 5bytes của key cần thử $2^{8*5} = 2^{40} 
+
 ### Reference
 
 [1] _https://www.davidwong.fr/blockbreakers/square.html_
