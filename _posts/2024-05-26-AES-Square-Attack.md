@@ -146,7 +146,20 @@ Do đó, ta chỉ cần đoán 4 bytes ở ``roundKey`` cuối, cùng với 1 by
 
 ![image](/assets/image/AES/square_attack/SQUARE-14.jpg)
 
-Cuộc tấn công này đòi hỏi nhiều nguồn tài nguyên, để cover 5bytes của key cần thử $2^{8*5} = 2^{40} 
+Cuộc tấn công này đòi hỏi nhiều nguồn tài nguyên, để cover 5bytes của key cần thử $2^{8*5} = 2^{40}$
+
+### AES 6 Round
+
+Để có được ``𝛬-set`` , chúng ta một lần nữa cần đoán số bytes key ( 4 bytes của first sybkey)
+
+Tạo $2^{32}$ plaintext, tất cả đều có cùng các byte ở các vị trí không hoạt động.
+Các plaintext này phải bao phủ tất cả các byte có thể trong cột byte đầu tiên, ngay trước khi thực hiện phép biến đổi MixColumns của vòng đầu tiên.
+
+Bằng cách này, khi đưa ra dự đoán chính xác, bạn sẽ chỉ cần chọn các bản rõ có liên quan thay vì tạo lại bộ bản rõ chính xác sẽ được chuyển thành tập ``Λ`` ở đầu ra của vòng đầu tiên.
+
+![image](/assets/image/AES/square_attack/SQUARE-15.jpg)
+
+Đối với cuộc tấn công này, cần đoán 5 + 4 = 9 byte của subkey ở điều kiện lý tưởng. Ngoài ra chúng ta có thể phải mất $2^{8*9} = 2^{72}$.
 
 ### Reference
 
