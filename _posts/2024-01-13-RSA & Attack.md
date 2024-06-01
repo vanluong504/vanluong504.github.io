@@ -3,7 +3,7 @@ title: RSA & Attack
 date: 2024-01-13 12:00:00
 categories: [Cryptography]
 tags: [Cryptography, Learning]
-image: '/assets/image/RSA/RSA_intro.jpg'
+image: /assets/image/RSA/RSA_cryptohack.png
 math: true
 ---
 
