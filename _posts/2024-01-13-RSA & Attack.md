@@ -328,26 +328,26 @@ print(long_to_bytes(pow(c,d,n)))
 
 Cuộc tấn công mô đun phổ biến lợi dụng thực tế là nếu hai khóa công khai RSA chia sẻ cùng một mô đun (n), các bản mã được mã hóa bằng các khóa này cũng sẽ chia sẻ cùng một mô đun. Giả sử chúng ta có hai bản mã, C1 và C2, được mã hóa bằng các khóa công khai tương ứng (e1, n) và (e2, n).
 
-$$C_1 = M^{e1} (mod(N))$$
-
-$$C_2 = M^{e_2} (mod(N))$$
+$$
+\begin{cases}
+C_1 = M^{e1} (mod(N)) \\
+C_2 = M^{e_2} (mod(N))
+\end{cases}
+$$
 
 
 Để thực hiện tấn công tìm m thì ta cần tìm u, v từ
 
-$$GCD(e_1, e_2) = 1 <=> e1 * u + e_2 * v = 1$$
-
-
-$$C_1 = M^{e_1}$$
-
-$$C_2 = M^{e_2}$$
-
-$$C_1^u = M^{e_1} . u$$
-
-$$C_2^v = M^{e_2} . v$$
-
-
-$$C_1^u * C_2^v = M^{e_1} . u  .  M^{e_2} . v = M^{e_1 . u + e_2 . v} = M$$
+$$
+\begin{cases}
+GCD(e_1, e_2) = 1 <=> e1 * u + e_2 * v = 1 \\
+C_1 = M^{e_1} \\
+C_2 = M^{e_2} \\
+C_1^u = M^{e_1} . u \\
+C_2^v = M^{e_2} . v \\
+C_1^u * C_2^v = M^{e_1} . u  .  M^{e_2} . v = M^{e_1 . u + e_2 . v} = M
+\end{cases}
+$$
 
 
 Từ đó ta sẽ khôi phục được bản mã.
@@ -460,7 +460,7 @@ True
 
 Ở đây ``Boneh Durfee`` sẽ tấn công với điều kiện private key lớn hơn: 
 
-$$d < N ^ {0.292}$$
+$$\boxed{d < N ^ {0.292}}$$
 
 Chúng ta sử dụng tấn công Boneh Durfee để tìm lại d. 
 
@@ -576,15 +576,15 @@ Cách thức hoạt động của Attack:
 
 Giả sử kẻ tấn công nhận được văn bản mật mã C về cơ bản là $$M = c^d (modN)$$ kẻ tấn công không biết về M (được đệm PKCS) nhưng anh ta biết về khóa công khai (e, n).
 
-$$C = M^e(mod(N))$$
+$$\boxed{C = M^e(mod(N))}$$
 
 Kẻ tấn công sau đó nhân giá trị mật mã này với một s đã chọn. Đối với tất cả các trường hợp lỗi, máy chủ sẽ báo lỗi. Kẻ tấn công tiếp tục thay đổi giá trị của s và đợi cho đến khi được máy chủ chấp nhận.
 
-$$C' = Cs^e (mod(N))$$
+$$\boxed{C' = Cs^e (mod(N))}$$
 
 Khi máy chủ chấp nhận C 'có nghĩa là C'sau khi giải mã bắt đầu bằng 0x00 0x02 và C' là mã hóa hợp lệ cho M  *  s với đệm PKCS.
 
-$$M' = (Cs^e)^d (mod(N)) = C^d s^{ed} (mod(N)) = ms (mod(N)) $$
+$$\boxed{M' = (Cs^e)^d (mod(N)) = C^d s^{ed} (mod(N)) = ms (mod(N))}$$
 
 Chọn hằng số $$B = 2^8(k−2)$$ k là kích thước khóa tính bằng byte, giống như trong RSA chúng ta nói 2048 bit (256 byte).
 
