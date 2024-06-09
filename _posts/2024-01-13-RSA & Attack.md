@@ -438,7 +438,7 @@ $$\boxed{n = p_1  *  p_2  *  p_3  *  ...  *  p_n}$$
 $$\boxed{\phi(n) = (p_1-1)  *  (p_2-1)  *  (p_3-1)  *  ...  *  (p_n-1)}$$
 
 
-```sage
+```text
 >>> from Crypto.Util.number import  * 
 >>> p1 = 13
 >>> p2 = 17
