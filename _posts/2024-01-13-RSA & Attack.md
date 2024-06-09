@@ -36,6 +36,7 @@ _Số d thỏa mãn_
 $$\boxed{ed ≡ 1 (mod φ(N))}$$
 
 _Public Key gồm:_
+
 $$
 \begin{cases}
 N  \text{ - mudulus} \\
@@ -464,19 +465,27 @@ $$\boxed{d < N ^ {0.292}}$$
 
 Chúng ta sử dụng tấn công Boneh Durfee để tìm lại d. 
 
-$${E, n} \xrightarrow[d < N^{0.292}]{P} d$$
+$$\boxed{{E, n} \xrightarrow[d < N^{0.292}]{P} d}$$
 
 
 
-$$\phi(n) = (p-1)  *  (q-1) = p * q - p - q + 1 = n + 1 - p - q$$
-$$e * d = 1  \ \% \ \phi(n)$$
-$$e * d = k * \phi(n) + 1$$
-$$k * \phi(n) + 1 = 0 \ \% \ e$$
-$$k * (n + 1 - p - q) + 1 = 0 \ \% \ e$$
-$$2k * [(n + 1) / 2 + (- p - q) / 2] + 1 = 0 \ \% \ e$$
-$$f(x, y) = x  * (A + y) + 1$$
+$$
+\begin{cases}
+\phi(n) = (p-1)  *  (q-1) = p * q - p - q + 1 = n + 1 - p - q \\
 
-```
+e * d = 1  \ \% \ \phi(n) \\
+
+e * d = k * \phi(n) + 1 \\
+
+k * \phi(n) + 1 = 0 \ \% \ e \\
+
+k * (n + 1 - p - q) + 1 = 0 \ \% \ e \\
+
+2k * [(n + 1) / 2 + (- p - q) / 2] + 1 = 0 \ \% \ e \\
+
+f(x, y) = x  * (A + y) + 1 \\
+\end{cases}
+$$
 
 Khi đó ta dựng lattices từ ``f(x,y) = x  * (A + y) + 1 ``
 
@@ -592,40 +601,50 @@ Vì 2 byte đầu tiên là 0x00 0x02 ,2⁸ được thực hiện để hiển 
 
 Khi tin nhắn được máy chủ chấp nhận, điều đó có nghĩa là.
 
-$$2B < m * s (mod(N)) < 3B$$
+$$\boxed{2B < m * s (mod(N)) < 3B}$$
 
-Nếu thông điệp được chấp nhận, 2 byte đầu tiên được ``0x00 02`` và do đó thông điệp $$m * s \ \% \ N $$ hoàn toàn nhỏ hơn khi 2 byte đầu tiên được 0x00 03. Và giống như kẻ tấn công tiếp tục giảm ranh giới bằng cách thực hiện tìm kiếm nhị phân cho đến khi một giá trị duy nhất được tìm thấy.
+Nếu thông điệp được chấp nhận, 2 byte đầu tiên được ``0x00 02`` và do đó thông điệp $$m * s \ \% \ N$$ hoàn toàn nhỏ hơn khi 2 byte đầu tiên được 0x00 03. Và giống như kẻ tấn công tiếp tục giảm ranh giới bằng cách thực hiện tìm kiếm nhị phân cho đến khi một giá trị duy nhất được tìm thấy.
 
 ### Brute force attack on small secret CRT-Exponents
 
 Giả sử tôi có:
 
-$$d_p ≡ e^{-1} \ (mod(p-1))$$
+$$
+\begin{cases}
+d_p ≡ e^{-1} \ (mod(p-1)) \\
 
-$$d_q ≡ e^{-1} \ (mod(q-1))$$
+d_q ≡ e^{-1} \ (mod(q-1))
+\end{cases}
+$$
 
 Với dp ta có:
     
-$$d_p  *  e ≡ 1 \ (mod(p-1))$$
-    
-$$d_p  *  e ≡ 1 + k(p-1)$$
+$$
+\begin{cases}
+d_p  *  e ≡ 1 \ (mod(p-1)) \\
+d_p  *  e ≡ 1 + k(p-1)
+\end{cases}
+$$
 
 Chọn một số m bất kì sao cho ``GCD(m, p) = 1``
 
 Khi đó:
 
-$$m^{d_p * e} = m^{1+k(p-1)} = m  *  m^{(p-1)^k}  $$
+$$\boxed{m^{d_p * e} = m^{1+k(p-1)} = m  *  m^{(p-1)^k}}$$
 
 Theo Fermat’s little theorem ta có:
 
-$$m  *  m^{(p-1)^k}(modP) = m  *  1^k(modP) = m (modP) $$
-
-$$m^{e * d_p} ≡ m(modP) \ hay \ m - m^{e * d_p} = k * p$$
+$$
+\begin{cases}
+m  *  m^{(p-1)^k}(modP) = m  *  1^k(modP) = m (modP) \\
+m^{e * d_p} ≡ m(modP) \ hay \ m - m^{e * d_p} = k * p
+\end{cases}
+$$
 
 Và cuối cùng:
 
 
-$$GCD(m - m^{e .d_p}, n) = GCD(k.p, p . q) = p$$ 
+$$boxed{GCD(m - m^{e .d_p}, n) = GCD(k.p, p . q) = p}$$ 
 
 với ``m < n ``
 
