@@ -14,7 +14,7 @@ timezone: Asia/Saigon
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: vanluong504 # the main title
+title: vanluongkma # the main title
 
 tagline: Member of KCSC # it will display as the sub-title
 
@@ -23,10 +23,10 @@ description: >- # used by seo meta and the atom feed
 
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.
-url: "https://vanluong504.github.io"
+url: "https://vanluongkma.github.io"
 
 github:
-  username: vanluong504 # change to your github username
+  username: vanluongkma # change to your github username
 
 twitter:
   username: vanluong04_ # change to your twitter username
@@ -39,7 +39,7 @@ social:
   links:
     # The first element serves as the copyright owner's link
     - https://twitter.com/vanluong04_ # change to your twitter homepage
-    - https://github.com/vanluong504 # change to your github homepage
+    - https://github.com/vanluongkma # change to your github homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
     # - https://www.linkedin.com/in/username
