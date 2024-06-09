@@ -15,7 +15,9 @@ _RSA thuộc nhóm hệ mã khóa công khai, dựa vào độ khó của bài t
 
 _Chọn 2 số nguyên tố lớn **p, q** với **p ≠ q**_
 
-_Tính_ $$\boxed{N = p* q}$$
+_Tính_ 
+
+$$\boxed{N = p* q}$$
 
 _Tính giá trị hàm số Ơle_
 
@@ -25,9 +27,13 @@ _Chọn 1 số **e** sao cho_
 
 $$\boxed{1 < e < φ(N) \ và \ gcd(e, φ(N)) = 1}$$
 
-_Tính_ $$\boxed{d = e^{-1} (mod φ(N))}$$ 
+_Tính_ 
 
-_Số d thỏa mãn_ $$\boxed{ed ≡ 1 (mod φ(N))}$$
+$$\boxed{d = e^{-1} (mod φ(N))}$$ 
+
+_Số d thỏa mãn_ 
+
+$$\boxed{ed ≡ 1 (mod φ(N))}$$
 
 _Public Key gồm:_
 $$
@@ -260,9 +266,13 @@ print(long_to_bytes(m))
 
 Để giảm thời gian giải mã (hoặc thời gian tạo chữ ký), người ta có thể muốn sử dụng một giá trị nhỏ của d hơn là một d ngẫu nhiên. Do lũy thừa mô-đun cần có thời gian tuyến tính trong log2 d, nên một d nhỏ có thể cải thiện hiệu suất ít nhất là hệ số 10 (đối với mô-đun 1024 bit). Thật không may, một cuộc tấn công thông minh của M. Wiener [19] cho thấy rằng một d nhỏ dẫn đến sự phá vỡ hoàn toàn hệ thống mật mã.
 
-Đặt $N= p * q$ với $q < p < 2q$ . Đặt $d < \frac{1}{3}N^{\frac{1}{4}}$. Cho trước (N,e) với $ed = 1 mod \phi(N)$ , Marvin có thể phục hồi d một cách hiệu quả.
+Đặt $N= p * q$ với $q < p < 2q$ . Đặt $\boxed{d < \frac{1}{3}N^{\frac{1}{4}}}$. Cho trước (N,e) với $ed = 1 mod \phi(N)$ , Marvin có thể phục hồi d một cách hiệu quả.
 
-Bằng chứng dựa trên các xấp xỉ sử dụng các phân số liên tục. Vì $ed = 1 mod \phi(N)$, nên tồn tại k sao cho $ed − k \phi(N) = 1$. Do đó, $\mid \frac{e}{\phi(N)} - \frac{k}{d} \mid = \frac{1}{d.\phi(N)}$
+Bằng chứng dựa trên các xấp xỉ sử dụng các phân số liên tục. Vì $ed = 1 mod \phi(N)$, nên tồn tại k sao cho $\boxed{ed − k \phi(N) = 1}$. 
+
+Do đó
+
+$$\boxed{\mid \frac{e}{\phi(N)} - \frac{k}{d} \mid = \frac{1}{d.\phi(N)}}$$
 
 Do đó, $\frac{k}{d}$ là một xấp xỉ của $\frac{e}{phi(N)}$. Mặc dù Marvin không biết phi(N), anh ấy có thể sử dụng N để tính gần đúng nó. Thật vậy, vì $\phi(N) = N − p − q + 1$ và $p + q − 1 < 3 \sqrt{N}$ , nên chúng ta có 
 
@@ -384,13 +394,14 @@ Giả định rằng bạn là một phần của nhóm và sở hữu khóa cô
 
 Ta có:
 
-$$e * d = 1 mod \phi(n)$$
-    
-$$e * d = k  *  \phi(n) + 1$$
-    
-$$k = \frac{e * d - 1}{\phi(n)}$$
-    
-$$φ(n) = \frac{e * d - 1}{k}$$
+$$
+\begin{cases}
+e * d = 1 mod \phi(n) \\
+e * d = k  *  \phi(n) + 1 \\
+k = \frac{e * d - 1}{\phi(n)} \\  
+φ(n) = \frac{e * d - 1}{k}
+\end{cases}
+$$
 
 
 Nếu kết quả không phải là số nguyên, hãy tăng k dần cho đến khi thu được kết quả.
@@ -405,11 +416,11 @@ Khi Marvin cố gắng gửi một tin nhắn tương tự như Alices, Bob nh�
 
 2. Vì Bob chỉ kiểm tra một số ký tự, chuỗi nhất định, tin nhắn của Marvin sẽ được chấp thuận vì theo quan điểm của Bob, Marvin đang gửi một tin nhắn ngẫu nhiên không chứa bất kỳ văn bản không mong muốn nào. Và bob trả về tin nhắn đã ký. 
 
-$$S’ = (M’)^d \ (mod(N)) = (r^e * M)^d \ (mod(N)) = r^{ed}  *  M^d \ (mod(N)) = r  *  M^d  \ (mod(N))$$
+$$\boxed{S’ = (M’)^d \ (mod(N)) = (r^e * M)^d \ (mod(N)) = r^{ed}  *  M^d \ (mod(N)) = r  *  M^d  \ (mod(N))}$$
 
 3. Bây giờ tất cả những gì Marvin phải làm là giải mã tin nhắn và loại bỏ yếu tố gây mù. Chữ kí cho thông điệp M chính là : 
 
-$$\frac{S'}{r} = M^d \ (mod(N))$$
+$$\boxed{\frac{S'}{r} = M^d \ (mod(N))}$$
 
 ### Multi-prime RSA
 
@@ -422,9 +433,9 @@ $$\phi(n) = \prod_{i=1}^k (p_i - 1)$$
 Ở challenge ``Manyprime`` bên dưới thì chúng ta sẽ áp dụng cách tấn công này.
 
 
-$$n = p_1  *  p_2  *  p_3  *  ...  *  p_n$$
+$$\boxed{n = p_1  *  p_2  *  p_3  *  ...  *  p_n}$$
 
-$$\phi(n) = (p_1-1)  *  (p_2-1)  *  (p_3-1)  *  ...  *  (p_n-1)$$
+$$\boxed{\phi(n) = (p_1-1)  *  (p_2-1)  *  (p_3-1)  *  ...  *  (p_n-1)}$$
 
 
 ```sage
@@ -464,6 +475,7 @@ $$k * \phi(n) + 1 = 0 \ \% \ e$$
 $$k * (n + 1 - p - q) + 1 = 0 \ \% \ e$$
 $$2k * [(n + 1) / 2 + (- p - q) / 2] + 1 = 0 \ \% \ e$$
 $$f(x, y) = x  * (A + y) + 1$$
+
 ```
 
 Khi đó ta dựng lattices từ ``f(x,y) = x  * (A + y) + 1 ``
