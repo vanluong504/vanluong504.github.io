@@ -465,24 +465,18 @@ $$\boxed{d < N ^ {0.292}}$$
 
 Chúng ta sử dụng tấn công Boneh Durfee để tìm lại d. 
 
-$$\boxed{{E, n} \xrightarrow[d < N^{0.292}]{P} d}$$
+$${E, n} \xrightarrow[d < N^{0.292}]{P} d$$
 
 
 
 $$
 \begin{cases}
 \phi(n) = (p-1)  *  (q-1) = p * q - p - q + 1 = n + 1 - p - q \\
-
 e * d = 1  \ \% \ \phi(n) \\
-
 e * d = k * \phi(n) + 1 \\
-
 k * \phi(n) + 1 = 0 \ \% \ e \\
-
 k * (n + 1 - p - q) + 1 = 0 \ \% \ e \\
-
 2k * [(n + 1) / 2 + (- p - q) / 2] + 1 = 0 \ \% \ e \\
-
 f(x, y) = x  * (A + y) + 1 \\
 \end{cases}
 $$
