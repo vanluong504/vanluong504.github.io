@@ -9,47 +9,54 @@ math: true
 
 ## RSA
 
-Trong mật mã học, RSA là một thuật toán mật mã hóa khóa công khai. Đây là thuật toán đầu tiên phù hợp với việc tạo ra chữ ký điện tử đồng thời với việc mã hóa. Nó đánh dấu một sự tiến bộ vượt bậc của lĩnh vực mật mã học trong việc sử dụng khóa công cộng. RSA đang được sử dụng phổ biến trong thương mại điện tử và được cho là đảm bảo an toàn với điều kiện độ dài khóa đủ lớn.
+_Trong mật mã học, RSA là một thuật toán mật mã hóa khóa công khai. Đây là thuật toán đầu tiên phù hợp với việc tạo ra chữ ký điện tử đồng thời với việc mã hóa. Nó đánh dấu một sự tiến bộ vượt bậc của lĩnh vực mật mã học trong việc sử dụng khóa công cộng. RSA đang được sử dụng phổ biến trong thương mại điện tử và được cho là đảm bảo an toàn với điều kiện độ dài khóa đủ lớn._
 
-RSA thuộc nhóm hệ mã khóa công khai, dựa vào độ khó của bài toán phân tích 1 số ra thừa số nguyên tố (factoring problem). Để tạo cặp khóa Public key và Private key, Alice cần: 
+_RSA thuộc nhóm hệ mã khóa công khai, dựa vào độ khó của bài toán phân tích 1 số ra thừa số nguyên tố (factoring problem). Để tạo cặp khóa Public key và Private key, Alice cần:_ 
 
-Chọn 2 số nguyên tố lớn **p, q** với **p ≠ q**
+_Chọn 2 số nguyên tố lớn **p, q** với **p ≠ q**_
 
-Tính $$N = p* q$$
+_Tính_ $$\boxed{N = p* q}$$
 
-Tính giá trị hàm số Ơle 
+_Tính giá trị hàm số Ơle_
 
-$$φ(N) = (p-1) * (q-1)$$
+$$\boxed{φ(N) = (p-1) * (q-1)}$$
 
-Chọn 1 số **e** sao cho 
+_Chọn 1 số **e** sao cho_
 
-$$1 < e < φ(N) \ và \ gcd(e, φ(N)) = 1$$
+$$\boxed{1 < e < φ(N) \ và \ gcd(e, φ(N)) = 1}$$
 
-Tính $$d = e^{-1} (mod φ(N))$$ , số d thỏa mãn $$ed ≡ 1 (mod φ(N))$$
+_Tính_ $$\boxed{d = e^{-1} (mod φ(N))}$$ 
 
-Public Key gồm:
+_Số d thỏa mãn_ $$\boxed{ed ≡ 1 (mod φ(N))}$$
 
-$$N  \text{ - mudulus} $$
+_Public Key gồm:_
+$$
+\begin{cases}
+N  \text{ - mudulus} \\
+e  \text{ - số mũ mã hóa}
+\end{cases}
+$$
 
-$$e  \text{ - số mũ mã hóa} $$
+_Private Key gồm:_
 
-Private Key gồm:
-
-$$N  \text{ - mudulus, xuất hiện cả trong khóa công khai và bí mật} $$
-
-$$d  \text{ - số mũ giải mã} $$
+$$
+\begin{cases}
+N  \text{ - mudulus, xuất hiện cả trong khóa công khai và bí mật} \\
+d  \text{ - số mũ giải mã} 
+\end{cases}
+$$
 
 Khi Bob muốn gửi một tin nhắn M cho Alice, Bob chuyển M thành một số **m < n** theo 1 cách thỏa thuận trước. Bob sẽ tính ra bản mã **c** từ bản rõ **m** theo công thức: 
 
-$$c = m ^ e (modN) $$
+$$\boxed{c = m ^ {e} (mod N)}$$
 
 Để giải mã, Alice dùng Private Key của mình để tính ngược lại:
      
-$$m = c ^ d (modN)$$
+$$\boxed{m = c ^ d (modN)}$$
 
 Quá trình giải mã có thể thu được **m** ban đầu là do: 
 
-$$c ^ d ≡ (m ^ e) ^ d ≡ m ^ ed (modN) ≡ m (modN) \ hay \ m = c ^ d (mod N)$$
+$$\boxed{c ^ d ≡ (m ^ e) ^ d ≡ m ^ {ed} (modN) ≡ m (modN) \ hay \ m = c ^ d (mod N)}$$
 
 Độ mạnh của hệ mã RSA dựa trên việc bạn cần phân tích được n ra thừa số nguyên tố để tính d nếu muốn phá mã, và đến nay chưa có giải thuật nào hiệu quả trong thời gian đa thức giúp ta phân tích thừa số nguyên tố đối với các số lớn.
 
@@ -105,12 +112,12 @@ Giả sử Alice muốn chia sẻ một tin nhắn M nhỏ (một khóa đối x
 
 Sẽ không có vấn đề gì nếu cô ấy sử dụng đệm nhưng rõ ràng không phải vậy. Bạn chặn tin nhắn và suy ra từ khóa công khai rằng nó được tính toán như sau: 
 
-$$C = M^3 [n]$$
+$$\boxed{C = M^3 [n]}$$
 
 
 Nhưng vì nhỏ, $M^3 < n$ vì M vậy nó không bị ảnh hưởng bởi modulo. Bạn chỉ cần tính căn bậc ba của C để có được thông điệp gốc.
 
-$$C = M ^ 3 (modN) = M^3 $$
+$$\boxed{C = M ^ 3 (modN) = M^3}$$
 
 Code minh họa: 
 
@@ -145,13 +152,13 @@ Trong thực tế nếu: $p - q < n^{\frac{1}{4}}$ thì Fermat’s factoring alg
 
 Ta có : 
 
-$$x = \frac{p - q}{2}$$ 
+$$\boxed{x = \frac{p - q}{2}}$$ 
 
-$$y = \frac{p + q}{2}$$
+$$\boxed{y = \frac{p + q}{2}}$$
 
 n có thể được phân tích thừa số nguyên tố như sau: 
 
-$$n = x^2 - y^2 = (x - y)(x + y)$$
+$$\boxed{n = x^2 - y^2 = (x - y)(x + y)}$$
 
 Định lý Fermat giúp tìm p, q
 
@@ -202,17 +209,17 @@ Kịch bản tấn công xảy ra nếu máy chủ gửi cùng 1 tin nhắn broa
 
 Giả sử e = 3, đặt $M = m^3$. Nhiệm vụ của ta là giải hệ phương trình đồng dư: 
 
-
-$$M ≡ c1[n1]$$
-
-$$M ≡ c2[n2]$$
-
-$$M ≡ c3[n3]$$
-
+$$
+\begin{cases}
+M ≡ c1[n1] \\
+M ≡ c2[n2] \\
+M ≡ c3[n3] \\
+\end{cases}
+$$
 
 Để tìm được M thì điều kiện cần có là 
 
-$$GCD(n_i, n_j) = 1$$
+$$\boxed{GCD(n_i, n_j) = 1}$$
 
 Ta có thể áp dụng [Chinese Remainder Theorem](https://en.wikipedia.org/wiki/Chinese_remainder_theorem#:~:text=In%20mathematics%2C%20the%20Chinese%20remainder,are%20pairwise%20coprime%20(no%20two)). Sau khi tính được M, ta sẽ tìm lại được m (vì $m < n_i$ nên $M = m ^ 3 < N$, ta chỉ cần tính căn bậc 3 của M).
 
@@ -258,23 +265,24 @@ print(long_to_bytes(m))
 Bằng chứng dựa trên các xấp xỉ sử dụng các phân số liên tục. Vì $ed = 1 mod \phi(N)$, nên tồn tại k sao cho $ed − k \phi(N) = 1$. Do đó, $\mid \frac{e}{\phi(N)} - \frac{k}{d} \mid = \frac{1}{d.\phi(N)}$
 
 Do đó, $\frac{k}{d}$ là một xấp xỉ của $\frac{e}{phi(N)}$. Mặc dù Marvin không biết phi(N), anh ấy có thể sử dụng N để tính gần đúng nó. Thật vậy, vì $\phi(N) = N − p − q + 1$ và $p + q − 1 < 3 \sqrt{N}$ , nên chúng ta có 
-$$|N − \phi(N)| < 3 \sqrt{N}$$ 
+
+$$\boxed{|N − \phi(N)| < 3 \sqrt{N}}$$ 
 
 Sử dụng N thay cho $\phi(N)$, chúng tôi thu được
 
-$$|\frac{e}{N} - \frac{k}{d} = |\frac{ed - k \phi(N) - kN + k \phi(n)}{Nd}| = |\frac{1 - k(N - \phi(N))}{Nd}| \le |\frac{3k \sqrt{N}}{Nd}| = |\frac{3k}{d \sqrt{N}}| $$
+$$\boxed{|\frac{e}{N} - \frac{k}{d} = |\frac{ed - k \phi(N) - kN + k \phi(n)}{Nd}| = |\frac{1 - k(N - \phi(N))}{Nd}| \le |\frac{3k \sqrt{N}}{Nd}| = |\frac{3k}{d \sqrt{N}}| }$$
 
 Bây giờ, $k * \phi(N) = ed − 1 < ed$ . Vì $e < phi(N)$ , chúng ta thấy rằng $k < d < \frac{1}{3}N^{\frac{1}{4}}$ . Do đó chúng tôi có được
 
-$$|\frac{e}{n} - \frac{k}{d}| < |\frac{3 * \frac{1}{3}n^{\frac{1}{4}} * \sqrt{n}}{n * d}|$$
+$$\boxed{|\frac{e}{n} - \frac{k}{d}| < |\frac{3 * \frac{1}{3}n^{\frac{1}{4}} * \sqrt{n}}{n * d}|}$$
 
-$$|\frac{e}{n} - \frac{k}{d}| < |\frac{n^{\frac{1}{4}}}{d * \sqrt{n}}|$$
+$$\boxed{|\frac{e}{n} - \frac{k}{d}| < |\frac{n^{\frac{1}{4}}}{d * \sqrt{n}}|}$$
 
-$$|\frac{e}{n} - \frac{k}{d}| < |\frac{1}{d * n^{\frac{1}{4}} * \sqrt{n}}| < |\frac{1}{d * n^{\frac{1}{4}}}|$$
+$$\boxed{|\frac{e}{n} - \frac{k}{d}| < |\frac{1}{d * n^{\frac{1}{4}} * \sqrt{n}}| < |\frac{1}{d * n^{\frac{1}{4}}}|}$$
 
 Cuối cùng có được
 
-$$\mid \frac{e}{n} - \frac{k}{d} \mid < \frac{1}{2d^2}$$
+$$\boxed{\mid \frac{e}{n} - \frac{k}{d} \mid < \frac{1}{2d^2}}$$
 
 
 Đây là một quan hệ xấp xỉ cổ điển. Các số lượng phân số $\frac{k}{d}$ với d < N gần đúng với $\frac{e}{N}$ bị giới hạn bởi $log_2N$. Thực tế, tất cả các phân số như vậy thu được dưới dạng các phần tử hội tụ của khai triển phân số liên tục của $\frac{e}{N}$ . Tất cả người ta phải làm là tính log N hội tụ của phân số tiếp tục cho $\frac{e}{N}$. Một trong số này sẽ bằng $\frac{k}{d}$. Vì $ed − kphi(N) = 1$, nên ta có $gcd(k, d) = 1$, và do đó $\frac{k}{d}$ là phân số rút gọn. Đây là một thuật toán thời gian tuyến tính để khôi phục khóa bí mật d.
